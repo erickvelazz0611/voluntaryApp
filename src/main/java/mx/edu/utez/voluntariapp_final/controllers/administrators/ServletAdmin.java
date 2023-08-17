@@ -248,6 +248,7 @@ public class ServletAdmin extends HttpServlet {
                     redirect = "/admin/administrators?result= " + false + "&message=" + URLEncoder.encode("error", StandardCharsets.UTF_8);
                 }
                 break;
+
             case "/admin/inactive-status":
                 id_user = req.getParameter("id");
                 System.out.println(id_user);
@@ -257,6 +258,7 @@ public class ServletAdmin extends HttpServlet {
                     redirect = "/admin/administrators?result= " + false + "&message=" + URLEncoder.encode("error", StandardCharsets.UTF_8);
                 }
                 break;
+
                 case "/admin/active-status-organ":
                 id_user = req.getParameter("id");
                 System.out.println(id_user);
@@ -276,6 +278,7 @@ public class ServletAdmin extends HttpServlet {
                     redirect = "/admin/main-organ?result= " + false + "&message=" + URLEncoder.encode("error", StandardCharsets.UTF_8);
                 }
                 break;
+
                 case "/admin/active-status-volunt":
                 id_user = req.getParameter("id");
                 System.out.println(id_user);
@@ -285,6 +288,7 @@ public class ServletAdmin extends HttpServlet {
                     redirect = "/admin/main-volunt?result= " + false + "&message=" + URLEncoder.encode("error", StandardCharsets.UTF_8);
                 }
                 break;
+
                 case "/admin/inactive-status-volunt":
                 id_user = req.getParameter("id");
                 System.out.println(id_user);
@@ -302,20 +306,7 @@ public class ServletAdmin extends HttpServlet {
                     redirect = "/admin/main?result=" + false + "&message=" + URLEncoder.encode("No se pudo eliminar el administrador", StandardCharsets.UTF_8);
                 }
 
-                break;*/
-
-                /* case "/cabina/delete":
-                id = req.getParameter("id");
-                if (!new DaoCabina().delete(null, id)){
-                    redirect = "/cabina/cabinas?result= " + true + "&message="
-                            + URLEncoder.encode("¡Éxito! Cabina desativada correctamente",
-                            StandardCharsets.UTF_8);
-                } else {
-                    redirect = "/cabina/cabinas?result= " + false + "&message="
-                            + URLEncoder.encode("¡Error! Acción no realizada correctamente",
-                            StandardCharsets.UTF_8);
-                }
-                break;*/
+                break;
 
                 /*case "/admin/users":
                     DaoAdmin daoAdmin = new DaoAdmin();
