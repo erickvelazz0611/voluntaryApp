@@ -30,9 +30,6 @@ import java.util.List;
         "/admin/admin-view-update",
         "/admin/update",
         "/admin/delete",
-
-        //https://github.com/erickvelazz0611/voluntaryApp.git
-
         "/admin/administrators",
         "/admin/main-organ",
         "/admin/main-volunt",
@@ -123,12 +120,15 @@ public class ServletAdmin extends HttpServlet {
 
                 redirect = "/pages/administrators/administrators_volun.jsp";
                 break;
+
             case "/admin/surveys":
                 redirect = "/pages/administrators/administrators_surveys.jsp";
                 break;
+
             case "/admin/stadist":
                 redirect = "/pages/administrators/administrators_stadist.jsp";
                 break;
+
             case "/admin/aprobe":
                 //Lista de aprobacion de los voluntarios
                 List<Volunteer> volunteer = new DaoVolunteer().findAllinactive();
@@ -148,24 +148,29 @@ public class ServletAdmin extends HttpServlet {
                 break;
 
             case "/admin/porfile":
+                System.out.println("Entrando al caso /admin/porfile");
                 HttpSession session = req.getSession();
                 User user = (User) session.getAttribute("user");
                 admin = new DaoAdmin().findOneByUser(user.getId_user());
                 System.out.println(admin);
                 if (admin != null) {
+                    System.out.println("Entró al admin");
                     req.setAttribute("admin", admin);
-
-                    byte[] profileImageBytes = admin.getImageUser();
-                    if (profileImageBytes != null && profileImageBytes.length > 0){
-                        String base64Image = Base64.getEncoder().encodeToString(profileImageBytes);
+                    byte[] imageBytes = admin.getImageUser();
+                    System.out.println("Bytes de imagen: " + (imageBytes == null ? "null" : imageBytes.length));
+                    if (imageBytes != null && imageBytes.length > 0) {
+                        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                        System.out.println("Imagen en Base64: " + base64Image);
                         req.setAttribute("base64Image", base64Image);
                     }
                     redirect = "/pages/administrators/administrator_porfile.jsp";
                 } else {
-                    System.out.println("No se encontro el administrador");
+                    System.out.println("No se encontró el administrador");
                     redirect = "/admin/main";
                 }
                 break;
+
+
 
 
             default:
@@ -201,7 +206,8 @@ public class ServletAdmin extends HttpServlet {
                 } else {
                     redirect = "/index.jsp?result=false&message=" + URLEncoder.encode("No se pudo guardar el administrador", StandardCharsets.UTF_8);
                 }
-                break;
+                resp.sendRedirect(req.getContextPath() + redirect);
+                return;
 
             case "/admin/update":
                 Admin admin1 = new Admin();
@@ -209,17 +215,13 @@ public class ServletAdmin extends HttpServlet {
                 name = req.getParameter("name");
                 email = req.getParameter("email");
                 password = req.getParameter("password");
-                //imageUser = req.getParameter("profilePic").getBytes();
-                System.out.println(id_admin + " " + email + " " + password);
 
                 Part filePart = req.getPart("profilePic");
-                if(filePart != null && filePart.getSize() > 0){
-                    System.out.println("entra al if");
+                if (filePart != null && filePart.getSize() > 0) {
                     InputStream fileContent = filePart.getInputStream();
                     byte[] imageBytes = fileContent.readAllBytes();
                     admin1.setImageUser(imageBytes);
                 }
-
 
                 admin1.setId_admin(Long.valueOf(id_admin));
                 admin1.setName(name);
@@ -228,18 +230,19 @@ public class ServletAdmin extends HttpServlet {
                 user1.setEmail(email);
                 user1.setPassword(password);
                 admin1.setUser(user1);
-                try {
-                    // Guardar el objeto "Organ" en la base de datos
-                    if (new DaoAdmin().update(admin1)) {
-                        redirect = "/admin/main?result=" + true + "&message=" + URLEncoder.encode("Administrador actualizado correctamente", StandardCharsets.UTF_8);
-                    } else {
 
+                try {
+                    if (new DaoAdmin().update(admin1)) {
+                        redirect = "/admin/porfile";
+                    } else {
+                        redirect = "/admin/porfile";
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    redirect = "/admin/porfile?result=" + false + "&message=" + URLEncoder.encode("No se pudo actualizar el administrador", StandardCharsets.UTF_8);
+                    redirect = "/admin/porfile";
                 }
-                break;
+                resp.sendRedirect(redirect);
+                return;
 
             case "/admin/active-status":
                 id_user = req.getParameter("id");

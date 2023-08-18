@@ -229,7 +229,7 @@ public class DaoAdmin {
 
     public Admin findOneByUser(Long id) {
         System.out.println(id);
-        System.out.println("Bienvenido a tu inicio de sesion");
+        System.out.println("Bienvenido a tu inicio de sesión");
         try {
             conn = new MYSQLConnection().connect();
             String query = "SELECT a.* ,u.* ,r.* FROM administrators a INNER JOIN users u ON u.id = a.user_id INNER JOIN roles r on r.id= u.role_id where u.id =?;";
@@ -237,10 +237,12 @@ public class DaoAdmin {
             pstm.setLong(1, id);
             rs = pstm.executeQuery();
             if (rs.next()) {
-              Admin admin = new Admin();
-                admin .setId_admin(rs.getLong("id"));
-                admin .setName(rs.getString("name"));
+                Admin admin = new Admin();
+                admin.setId_admin(rs.getLong("id"));
+                admin.setName(rs.getString("name"));
                 admin.setUser_id(rs.getString("user_id"));
+                byte[] imageBytes = rs.getBytes("photo");
+                admin.setImageUser(imageBytes);
                 User user = new User();
                 admin.setUser(user);
                 Role role = new Role();
@@ -254,6 +256,9 @@ public class DaoAdmin {
         }
         return null;
     }
+
+
+
 
     public boolean save(Admin admin) {
         System.out.println("Bienvenido al DAO");
