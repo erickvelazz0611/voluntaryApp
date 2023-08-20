@@ -128,9 +128,10 @@
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" style="width:35px; height:35px"
                                      class="rounded-circle">
                             </a>
+                            <!-- -->
 
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -176,7 +177,7 @@
                         <div class="row g-0">
                             <div class="col-md-4 gradient-custom text-center text-white"
                                  style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem; position: relative;">
-                                <img src="../../assets/images/user-1.jpg" alt="Imagen" class="img-fluid my-5"
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="Imagen" class="img-fluid my-5"
                                      style="width: 130px; border-radius: 50%;"/>
                                 <i class="ti ti-user"></i>
                             </div>
@@ -270,7 +271,7 @@
 
                                                     <div class="modal-body">
                                                         <form  class="needs-validation" id="volunteer-form" novalidate
-                                                              action="/volunteer/update" method="post">
+                                                              action="/volunteer/update" method="post" enctype="multipart/form-data">
                                                             <input hidden value="${volunteer.id}" name="id">
 
                                                             <div class="row ">
@@ -380,6 +381,14 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-0 mb-4">
+                                                                <div class="form-floating form-control-icon">
+                                                                    <input name="profilePic" type="file"
+                                                                           id="voluntteerPicupload"
+                                                                           class="form-control"/>
+                                                                    <label for=voluntteerPicupload>Cambiar foto</label>
+                                                                </div>
+                                                            </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-danger btn-sm"
                                                                         data-bs-dismiss="modal" aria-label="Close">
@@ -452,7 +461,6 @@
 <!-- Sweet Alert JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.all.min.js"></script>
 <script>
-    // Función para mostrar la confirmación de SweetAlert
     function mostrarConfirmacion() {
         if (document.getElementById("volunteer-form").checkValidity()) {
             Swal.fire({
@@ -465,7 +473,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Si el usuario hace clic en "Sí", procedemos a enviar el formulario manualmente.
-                    enviarFormulario();
+                    document.getElementById('volunteer-form').submit();
                 }
             });
         } else {

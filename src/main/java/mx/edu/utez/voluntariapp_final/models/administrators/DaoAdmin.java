@@ -283,6 +283,29 @@ public class DaoAdmin {
         return false;
     }
 
+    public boolean saveAdmin(Admin admin) {
+        System.out.println("Bienvenido al DAO");
+        try {
+            conn = new MYSQLConnection().connect();
+            String query = "CALL dividir_admin(?,?,?,?,?);";
+            cs = conn.prepareCall(query);
+            cs.setString(1, admin.getUser().getEmail());
+            cs.setString(2, admin.getUser().getPassword());
+            cs.setBoolean(3, admin.getUser().isStatus());
+            cs.setLong(   4, admin.getRole().getId());
+            cs.setString(5, admin.getName());
+            cs.executeQuery();
+            return true;
+        } catch (Exception e) {
+            Logger.getLogger(DaoAdmin.class.getName())
+                    .log(Level.SEVERE, "Error findAll "
+                            + e.getMessage());
+        } finally {
+            close();
+        }
+        return false;
+    }
+
     public boolean update(Admin admin) {
         System.out.println("Bienvenido a la actualizacion");
         try {
@@ -305,13 +328,13 @@ public class DaoAdmin {
         }
         return false;
     }
-    public boolean delete(Long id,String adminId) {
+    public boolean delete(Long id, String adminId) {
         try {
             conn = new MYSQLConnection().connect();
-            String query = "CALL DeleteAdminAndUser(?);";
+            String query = "{Call DeleteAdministratorByUserId(?)}";
             cs= conn.prepareCall(query);
             cs.setString(1, adminId);
-            return pstm.executeUpdate() == 1;
+            return cs.executeUpdate() == 1;
         } catch (SQLException e) {
             Logger.getLogger(DaoAdmin.class.getName())
                     .log(Level.SEVERE, "Error No se puede eliminar " + e.getMessage());

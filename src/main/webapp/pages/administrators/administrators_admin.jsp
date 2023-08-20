@@ -145,8 +145,8 @@
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
-                                     class="rounded-circle">
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" class="rounded-circle"
+                                     style="width:35px; height:35px"/>
                             </a>
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -191,9 +191,6 @@
                                 <thead class="text-dark fs-4">
                                 <tr>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Fotografia</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Nombre</h6>
                                     </th>
                                     <th class="border-bottom-0">
@@ -202,66 +199,56 @@
                                     <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Status</h6>
                                     </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Activar</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Desactivar</h6>
-                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
+
                                 <c:forEach var="admin" items="${admins}">
                                     <tr>
                                             <%--          Muestra de la foto        --%>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-normal">
 
-                                            </h6>
-                                        </td>
                                             <%--          Muestra nombre del admin        --%>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-normal">
                                                 <c:out value="${admin.name}"/>
-
                                             </h6>
                                         </td>
                                             <%--          Muestra nombre del admin        --%>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-normal">
                                                 <c:out value="${admin.user.email}"/>
-
                                             </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal"></p>
-                                            <span class="badge rounded-3 fw-semibold
-                                                <c:if test="${admin.user.status == true}">bg-custom-success
-                                                </c:if>
-                                                <c:if test="${admin.user.status == false}">bg-custom-danger
-                                                </c:if>">
-                                                <c:out value="${admin.user.status ? 'Activo' : 'Inactivo'}"/>
-                                            </span>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <div class="col">
-                                                <form method="post" action="/admin/active-status">
-                                                    <input hidden value="${admin.user.id_user}" name="id"/>
-                                                    <button type="submit" class="btn btn-outline-success btn-sm">
-                                                        ACTIVAR
-                                                    </button>
-                                                </form>
+                                            <div class="d-flex align-items-center gap-2">
+                                                    <span class="badge bg-primary rounded-3 fw-semibold">
+                                                        <c:choose>
+                                                            <c:when test="${admin.user.status eq true}">
+                                                        <span>
+                                                            Activo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:when test="${admin.user.status eq false}">
+                                                        <span>
+                                                            Inactivo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:out value="${admin.user.status}"/>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </span>
                                             </div>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <form method="post" action="/admin/inactive-status">
+                                            <form action="/admin/delete" method="post">
                                                 <input hidden value="${admin.user.id_user}" name="id"/>
-                                                <button type="submit" class="btn btn-outline-success btn-sm">
-                                                    DESACTIVAR
+                                                <button class="btn btn-outline-dark btn-sm rounded-3 mt-2 ">
+                                                    Eliminar
                                                 </button>
                                             </form>
+
                                         </td>
-                                        <td class="border-bottom-0">
                                     </tr>
                                 </c:forEach>
                                 </tbody>

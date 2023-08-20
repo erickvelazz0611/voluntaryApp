@@ -142,8 +142,8 @@
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
-                                     class="rounded-circle">
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" class="rounded-circle"
+                                     style="width:35px; height:35px"/>
                             </a>
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -172,7 +172,7 @@
                 <div class="col-md-12">
                     <div class="d-flex align-items-center gap-2 dropdown-item">
                         <i class="ti ti-user-star fs-6"></i>
-                        <p class="mb-0 fs-3">Listado de Administrador</p>
+                        <p class="mb-0 fs-3">Listado de Eventos</p>
                         <br><br>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
                 <div class="col-md-12">
                     <div class="d-flex align-items-center gap-2 dropdown-item">
                         <i class="ti ti-fall fs-6"></i>
-                        <p class="mb-0 fs-3">Listado de Voluntarios</p>
+                        <p class="mb-0 fs-3">Listado de Formularios</p>
                         <br><br>
                     </div>
                 </div>
@@ -350,156 +350,6 @@
                                             </td>
                                             <td class="border-bottom-0">
                                                 <h6 class="fw-semibold mb-0"></h6>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-building fs-6"></i>
-                        <p class="mb-0 fs-3">Listado de Organizaciones</p>
-                    </div>
-                </div>
-
-            </div>
-            <hr>
-            <br><br>
-
-            <!-- Inicia la tabla para los usarios -->
-            <div class="row">
-                <!-- Aqui inicia el codigo 242 -->
-                <div class="col-lg- d-flex align-items-stretch">
-                    <div class="card w-100">
-                        <div class="card-body p-3">
-                            <div class="table-responsive">
-                                <table class="table text-nowrap mb-0 align-middle">
-                                    <!--  -->
-                                    <thead class="text-dark fs-4">
-                                    <tr>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Foto</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Nombre de la Organizacion</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Calle</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Colonia</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Codigo Postal</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Municipio</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Estado</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">RFC</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Telefono</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Correo</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Status</h6>
-                                        </th>
-                                        <%--                                        <th class="border-bottom-0">--%>
-                                        <%--                                            <h6 class="fw-semibold mb-0">Editar</h6>--%>
-                                        <%--                                        </th>--%>
-                                        <%--                                        <th class="border-bottom-0">--%>
-                                        <%--                                            <h6 class="fw-semibold mb-0">Eliminar</h6>--%>
-                                        <%--                                        </th>--%>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="orga" items="${organ}">
-                                        <tr>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-                                                    <c:out value="${orga.bussines_name}"/>
-
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-1">
-                                                    <c:out value="${orga.street}"/>
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">
-                                                    <c:out value="${orga.cologne}"/>
-
-                                                </p>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">
-                                                    <c:out value="${orga.postal_code}"/>
-                                                </p>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">
-                                                    <c:out value="${orga.municipality}"/>
-                                                </p>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-                                                    <c:out value="${orga.state}"/>
-
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-                                                    <c:out value="${orga.rfc}"/>
-
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-                                                    <c:out value="${orga.phone}"/>
-
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-                                                    <c:out value="${orga.user.email}"/>
-
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <div class="d-flex align-items-center gap-2">
-                                                        <span
-                                                                class="badge bg-danger rounded-3 fw-semibold"> <c:out
-                                                                value="${orga.user.status}"/>
-                                                        </span>
-                                                </div>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">
-
-                                                </p>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">
-
-                                                </p>
                                             </td>
                                         </tr>
                                     </c:forEach>

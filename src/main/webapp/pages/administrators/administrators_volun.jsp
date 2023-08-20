@@ -140,8 +140,7 @@
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
-                                     class="rounded-circle">
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" class="rounded-circle" style="width:35px; height:35px" />
                             </a>
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -188,9 +187,6 @@
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Foto</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Nombres</h6>
                                         </th>
                                         <th class="border-bottom-0">
@@ -213,9 +209,6 @@
                                             <h6 class="fw-semibold mb-0">Status</h6>
                                         </th>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Editar</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Eliminar</h6>
                                         </th>
                                     </tr>
@@ -225,57 +218,64 @@
 
                                     <tr>
                                         <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0"></h6>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0"></h6>
+                                            <h6 class="fw-semibold mb-0">
                                             <c:out value="${volun.name}"/>
                                             <c:out value="${volun.surname}"/>
                                             <c:out value="${volun.lastanme}"/>
-
+                                            </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0"></h6>
+                                            <h6 class="fw-semibold mb-0">
                                             <c:out value="${volun.birthday}"/>
+                                            </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0"></h6>
+                                            <h6 class="fw-semibold mb-0">
                                             <c:out value="${volun.curp}"/>
+                                            </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0"></h6>
+                                            <h6 class="fw-semibold mb-0">
                                             <c:out value="${volun.address}"/>
+                                            </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-1"></h6>
+                                            <h6 class="fw-semibold mb-1">
                                             <c:out value="${volun.phone}"/>
+                                            </h6>
                                         </td>
 
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal"></p>
+                                            <h6 class="fw-semibold mb-1">
                                             <c:out value="${volun.user.email}"/>
+                                            </h6>
                                         </td>
                                         <td class="border-bottom-0">
                                             <div class="d-flex align-items-center gap-2">
-                                                <span class="badge bg-danger rounded-3 fw-semibold"><c:out value="${volun.user.status}"/></span>
-
+                                                    <span class="badge bg-primary rounded-3 fw-semibold">
+                                                        <c:choose>
+                                                            <c:when test="${volun.user.status eq true}">
+                                                        <span>
+                                                            Activo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:when test="${volun.user.status eq false}">
+                                                        <span>
+                                                            Inactivo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:out value="${volun.user.status}"/>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </span>
                                             </div>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <div class="col">
-                                                <form method="post" action="/admin/active-status-volunt">
-                                                    <input hidden value="${volun.user.id_user}" name="id"/>
-                                                    <button type="submit" class="btn btn-outline-success btn-sm">
-                                                        ACTIVAR
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <form method="post" action="/admin/inactive-status-volunt">
+                                            <form action="/volunteer/delete" method="post">
                                                 <input hidden value="${volun.user.id_user}" name="id"/>
-                                                <button type="submit" class="btn btn-outline-success btn-sm">
-                                                    DESACTIVAR
+                                                <button class="btn btn-outline-dark btn-sm rounded-3 mt-2 ">
+                                                    Eliminar
                                                 </button>
                                             </form>
                                         </td>

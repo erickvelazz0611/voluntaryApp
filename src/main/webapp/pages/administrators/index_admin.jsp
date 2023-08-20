@@ -142,8 +142,8 @@
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
-                                     class="rounded-circle">
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" class="rounded-circle"
+                                     style="width:35px; height:35px"/>
                             </a>
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -217,24 +217,20 @@
                 <!-- Fin Total de usuarios -->
 
                 <!--  Row 3 -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                            <i class="ti ti-user-cog fs-6"></i>
-                            <p class="mb-0 fs-3">Reportes</p>
-                            <br><br>
-                        </a>
-                    </div>
-                </div>
-                <hr>
                 <!--  Fin Row 3 -->
 
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="" class="d-flex align-items-center gap-2 dropdown-item">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-outline-dark btn-sm rounded-3 mt-2 ml-auto">
+                                <a href="/admin/crearAdmin" class="btn">Añadir Administrador</a>
+                            </button>
+                        </div>
+                        <a class="d-flex align-items-center gap-2 dropdown-item">
                             <i class="ti ti-user-star fs-6"></i>
                             <p class="mb-0 fs-3">Administradores</p>
                         </a>
+
                     </div>
                 </div>
                 <hr>
@@ -249,9 +245,6 @@
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Foto</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Nombre</h6>
                                         </th>
                                         <th class="border-bottom-0">
@@ -260,15 +253,18 @@
                                         <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Status</h6>
                                         </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0"></h6>
+                                        </th>
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Actualizar</h6>
+                                        </td>
+
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach var="adm" items="${admin2}">
                                         <tr>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-1">
-                                                </h6>
-                                            </td>
                                             <td class="border-bottom-0">
                                                 <h6 class="fw-semibold mb-0">
                                                     <c:out value="${adm.name}"/>
@@ -282,9 +278,51 @@
                                             <td class="border-bottom-0">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <span class="badge bg-primary rounded-3 fw-semibold">
-                                                        <c:out value="${adm.user.status}"/>
+                                                        <c:choose>
+                                                            <c:when test="${adm.user.status eq true}">
+                                                        <span class="bg-custom-success">
+                                                            Activo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:when test="${adm.user.status eq false}">
+                                                        <span class="bg-custom-danger">
+                                                            Inactivo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:out value="${adm.user.status}"/>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </span>
                                                 </div>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <div class="col">
+                                                    <form method="post" action="/admin/active-status">
+                                                        <input hidden value="${adm.user.id_user}" name="id"/>
+                                                        <c:if test="${adm.user.status == false}">
+                                                            <button type="submit"
+                                                                    class="btn btn-outline-dark btn-sm rounded-3 mt-2">
+                                                                ACTIVAR
+                                                            </button>
+                                                        </c:if>
+                                                    </form>
+                                                    <form method="post" action="/admin/inactive-status">
+                                                        <input hidden value="${adm.user.id_user}" name="id"/>
+                                                        <c:if test="${adm.user.status == true}">
+                                                            <button type="submit"
+                                                                    class="btn btn-outline-dark btn-sm rounded-3 mt-2">
+                                                                DESACTIVAR
+                                                            </button>
+                                                        </c:if>
+                                                    </form>
+                                                </div>
+                                            </td>
+
+                                            <td class="border-bottom-0">
+                                                <button class="btn btn-outline-dark btn-sm rounded-1 mt-2 ">
+                                                    <a href="/admin/updateAdmin" class="btn">Editar</a>
+                                                </button>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -297,10 +335,15 @@
 
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-outline-dark btn-sm rounded-3 mt-2 ml-auto">
+                                <a href="/organ/crearOrgan" class="btn">Añadir Organización</a>
+                            </button>
+                        </div>
                         <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                             <i class="ti ti-user-star fs-6"></i>
                             <br>
-                            <p class="mb-0 fs-3">Organizaciones activas</p>
+                            <p class="mb-0 fs-3">Organizaciones</p>
                         </a>
                     </div>
                 </div>
@@ -316,9 +359,6 @@
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Foto</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Nombre</h6>
                                         </th>
                                         <th class="border-bottom-0">
@@ -327,16 +367,17 @@
                                         <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Status</h6>
                                         </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0"></h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Actualizar</h6>
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach var="organ" items="${organ2}">
                                         <tr>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-1">
-
-                                                </h6>
-                                            </td>
                                             <td class="border-bottom-0">
                                                 <h6 class="fw-semibold mb-0">
                                                     <c:out value="${organ.bussines_name}"/>
@@ -350,10 +391,52 @@
                                             <td class="border-bottom-0">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <span class="badge bg-primary rounded-3 fw-semibold">
-                                                        <c:out value="${organ.user.status}"/>
+                                                        <c:choose>
+                                                            <c:when test="${organ.user.status eq true}">
+                                                        <span class="bg-custom-success">
+                                                            Activo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:when test="${organ.user.status eq false}">
+                                                        <span class="bg-custom-danger">
+                                                            Inactivo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:out value="${organ.user.status}"/>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </span>
                                                 </div>
                                             </td>
+                                            <td class="border-bottom-0">
+                                                <div class="col">
+                                                    <form method="post" action="/admin/active-status-organ">
+                                                        <input hidden value="${organ.user.id_user}" name="id"/>
+                                                        <c:if test="${organ.user.status == false}">
+                                                            <button type="submit"
+                                                                    class="btn btn-outline-dark btn-sm rounded-3 mt-2">
+                                                                ACTIVAR
+                                                            </button>
+                                                        </c:if>
+                                                    </form>
+                                                    <form method="post" action="/admin/inactive-status-organ">
+                                                        <input hidden value="${organ.user.id_user}" name="id"/>
+                                                        <c:if test="${organ.user.status == true}">
+                                                            <button type="submit"
+                                                                    class="btn btn-outline-dark btn-sm rounded-3 mt-2">
+                                                                DESACTIVAR
+                                                            </button>
+                                                        </c:if>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <button class="btn btn-outline-dark btn-sm rounded-1 mt-2 ">
+                                                    <a href="${pageContext.request.contextPath}/organ/updateOrgan" class="btn">Editar</a>
+                                                </button>
+                                            </td>
+
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -365,10 +448,15 @@
 
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-outline-dark btn-sm rounded-3 mt-2 ml-auto">
+                                <a href="/volunteer/crearVolun" class="btn">Añadir Voluntario</a>
+                            </button>
+                        </div>
                         <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                             <i class="ti ti-user-star fs-6"></i>
                             <br>
-                            <p class="mb-0 fs-3">Voluntarios activos</p>
+                            <p class="mb-0 fs-3">Voluntarios</p>
                         </a>
                     </div>
                 </div>
@@ -384,9 +472,6 @@
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Foto</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Nombre</h6>
                                         </th>
                                         <th class="border-bottom-0">
@@ -395,15 +480,14 @@
                                         <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Status</h6>
                                         </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Actualizar</h6>
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach var="volun" items="${volunteer2}">
                                         <tr>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-1">
-                                                </h6>
-                                            </td>
                                             <td class="border-bottom-0">
                                                 <h6 class="fw-semibold mb-0">
                                                     <c:out value="${volun.name}"/>
@@ -417,9 +501,50 @@
                                             <td class="border-bottom-0">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <span class="badge bg-primary rounded-3 fw-semibold">
-                                                        <c:out value="${volun.user.status}"/>
+                                                        <c:choose>
+                                                            <c:when test="${volun.user.status eq true}">
+                                                        <span class="bg-custom-success">
+                                                            Activo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:when test="${volun.user.status eq false}">
+                                                        <span class="bg-custom-danger">
+                                                            Inactivo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:out value="${volun.user.status}"/>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </span>
                                                 </div>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <div class="col">
+                                                    <form method="post" action="/admin/active-status-volunt">
+                                                        <input hidden value="${volun.user.id_user}" name="id"/>
+                                                        <c:if test="${volun.user.status == false}">
+                                                            <button type="submit"
+                                                                    class="btn btn-outline-dark btn-sm rounded-3 mt-2">
+                                                                ACTIVAR
+                                                            </button>
+                                                        </c:if>
+                                                    </form>
+                                                    <form method="post" action="/admin/inactive-status-volunt">
+                                                        <input hidden value="${volun.user.id_user}" name="id"/>
+                                                        <c:if test="${volun.user.status == true}">
+                                                            <button type="submit"
+                                                                    class="btn btn-outline-dark btn-sm rounded-3 mt-2">
+                                                                DESACTIVAR
+                                                            </button>
+                                                        </c:if>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <button class="btn btn-outline-dark btn-sm rounded-1 mt-2 ">
+                                                    <a href="${pageContext.request.contextPath}/volunteer/updateVol" class="btn">Editar</a>
+                                                </button>
                                             </td>
                                         </tr>
                                     </c:forEach>

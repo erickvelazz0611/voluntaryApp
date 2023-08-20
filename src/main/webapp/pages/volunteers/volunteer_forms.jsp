@@ -122,7 +122,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px" class="rounded-circle">
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" style="width:35px; height:35px" class="rounded-circle">
                             </a>
 
                             <!-- Menu desplegable del la Foto fe perfil -->

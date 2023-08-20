@@ -206,7 +206,7 @@
                         <div class="row g-0">
                             <div class="col-md-4 gradient-custom text-center text-white"
                                  style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem; position: relative;">
-                                <img src="../../assets/images/user-1.jpg" alt="Imagen" class="img-fluid my-5"
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="Imagen" class="img-fluid my-5"
                                      style="width: 130px; border-radius: 50%;"/>
                                 <i class="ti ti-user"></i>
                             </div>
@@ -316,7 +316,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <form class="needs-validation" id="organ-form" novalidate
-                                                              action="/organ/update" method="post">
+                                                              action="/organ/update" method="post" enctype="multipart/form-data">
                                                             <input hidden value="${organ.id}" name="id">
 
                                                             <div class="row ">
@@ -442,6 +442,14 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-0 mb-4">
+                                                                <div class="form-floating form-control-icon">
+                                                                    <input name="profilePic" type="file"
+                                                                           id="organPicupload"
+                                                                           class="form-control"/>
+                                                                    <label for=organPicupload>Cambiar foto</label>
+                                                                </div>
+                                                            </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-danger btn-sm"
                                                                         data-bs-dismiss="modal" aria-label="Close">
@@ -528,7 +536,8 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Si el usuario hace clic en "Sí", procedemos a enviar el formulario manualmente.
-                    enviarFormulario();
+                    //enviarFormulario();
+                    document.getElementById('organ-form').submit();
                 }
             });
         } else {
@@ -546,7 +555,7 @@
                 // La solicitud se ha completado correctamente.
                 // Aquí manejamos la respuesta del servidor y mostramos la alerta de éxito o error.
                 if (xhr.responseText.includes("success")) {
-                    mostrarAlerta('¡Éxito! Organización actualizada correctamente.', 'success', true);
+                    mostrarAlerta('¡Éxito! Voluntario actualizado correctamente.', 'success', true);
                 } else {
                     mostrarAlerta('¡Error! Acción no realizada correctamente.', 'error', false);
                 }

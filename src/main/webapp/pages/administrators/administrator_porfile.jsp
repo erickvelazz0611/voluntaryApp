@@ -143,7 +143,7 @@
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/logos_voluntariapp/logo_extend.png" style="width:180px" alt=""/>
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" class="rounded-circle" style="width:35px; height:35px" />
                             </a>
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"

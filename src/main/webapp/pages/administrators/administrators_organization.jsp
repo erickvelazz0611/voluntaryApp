@@ -141,8 +141,7 @@
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
-                                     class="rounded-circle">
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" class="rounded-circle" style="width:35px; height:35px" />
                             </a>
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -190,9 +189,6 @@
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Foto</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Nombre de Empresa</h6>
                                         </th>
                                         <th class="border-bottom-0">
@@ -223,9 +219,6 @@
                                             <h6 class="fw-semibold mb-0">Status</h6>
                                         </th>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Editar</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Eliminar</h6>
                                         </th>
                                     </tr>
@@ -233,11 +226,7 @@
                                     <tbody>
                                     <c:forEach var="organ" items="${organs}">
                                     <tr>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">
 
-                                            </h6>
-                                        </td>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">
                                                 <c:out value="${organ.bussines_name}"/>
@@ -250,75 +239,70 @@
                                             </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">
+                                            <h6 class="fw-semibold mb-0">
                                                 <c:out value="${organ.cologne}"/>
-
-                                            </p>
+                                            </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">
+                                            <h6 class="fw-semibold mb-0">
                                                 <c:out value="${organ.postal_code}"/>
-                                            </p>
+                                            </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">
+                                            <h6 class="fw-semibold mb-0">
                                                 <c:out value="${organ.municipality}"/>
-                                            </p>
+                                            </h6>
                                         </td>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">
                                                 <c:out value="${organ.state}"/>
-
                                             </h6>
                                         </td>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">
                                                 <c:out value="${organ.rfc}"/>
-
                                             </h6>
                                         </td>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">
                                                 <c:out value="${organ.phone}"/>
-
                                             </h6>
                                         </td>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">
                                                 <c:out value="${organ.user.email}"/>
-
                                             </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <span class="badge rounded-3 fw-semibold
-                                                <c:if test="${organ.user.status == true}">bg-custom-success
-                                                </c:if>
-                                                <c:if test="${organ.user.status == false}">bg-custom-danger
-                                                </c:if>">
-                                                <c:out value="${organ.user.status ? 'Activo' : 'Inactivo'}"/>
-                                            </span>
-                                            <!--<h6 class="fw-semibold mb-0">
-                                                <c:out value="${organ.user.status}"/>
-                                            </h6>-->
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <div class="col">
-                                                <form method="post" action="/admin/active-status-organ">
-                                                    <input hidden value="${organ.user.id_user}" name="id"/>
-                                                    <button type="submit" class="btn btn-outline-success btn-sm">
-                                                        ACTIVAR
-                                                    </button>
-                                                </form>
+                                            <div class="d-flex align-items-center gap-2">
+                                                    <span class="badge bg-primary rounded-3 fw-semibold">
+                                                        <c:choose>
+                                                            <c:when test="${organ.user.status eq true}">
+                                                        <span>
+                                                            Activo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:when test="${organ.user.status eq false}">
+                                                        <span>
+                                                            Inactivo
+                                                        </span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:out value="${organ.user.status}"/>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </span>
                                             </div>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <form method="post" action="/admin/inactive-status-organ">
+                                            <form action="/admin/delete" method="post">
                                                 <input hidden value="${organ.user.id_user}" name="id"/>
-                                                <button type="submit" class="btn btn-outline-success btn-sm">
-                                                    DESACTIVAR
+                                                <button class="btn btn-outline-dark btn-sm rounded-3 mt-2 ">
+                                                    Eliminar
                                                 </button>
                                             </form>
                                         </td>
+
                                     </tr>
                                     </c:forEach>
                                     </tbody>
