@@ -300,6 +300,21 @@ public class DaoOrgan {
         return false;
     }
 
+    public boolean delete(Long id, String Id) {
+        try {
+            conn = new MYSQLConnection().connect();
+            String query = "{Call DeleteOrganizationByUserId(?)}";
+            cs= conn.prepareCall(query);
+            cs.setString(1, Id);
+            return cs.executeUpdate() == 1;
+        } catch (SQLException e) {
+            Logger.getLogger(DaoAdmin.class.getName())
+                    .log(Level.SEVERE, "Error No se puede eliminar " + e.getMessage());
+        } finally {
+            close();
+        }
+        return false;
+    }
 
 
     public void close() {

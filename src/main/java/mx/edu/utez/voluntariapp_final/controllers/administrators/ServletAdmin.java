@@ -11,6 +11,7 @@ import mx.edu.utez.voluntariapp_final.models.organization.DaoEvent;
 import mx.edu.utez.voluntariapp_final.models.organization.DaoOrgan;
 import mx.edu.utez.voluntariapp_final.models.organization.Event;
 import mx.edu.utez.voluntariapp_final.models.organization.Organ;
+import mx.edu.utez.voluntariapp_final.models.user.DaoUser;
 import mx.edu.utez.voluntariapp_final.models.user.User;
 import mx.edu.utez.voluntariapp_final.models.volunteer.DaoVolunteer;
 import mx.edu.utez.voluntariapp_final.models.volunteer.Volunteer;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
 
@@ -38,6 +40,8 @@ import java.util.List;
 
         // delete usuarios
         "/admin/volunteer/delete",
+        "/admin/organ/delete",
+        "/admin/deleteprofile",
 
         "/admin/administrators",
         "/admin/main-organ",
@@ -71,15 +75,19 @@ public class ServletAdmin extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         action = req.getServletPath();
+
         switch (action) {
             case "/admin/main":
-                //Usuarios activos
-                List<Admin> admin2 = new DaoAdmin().findAllActive();
+
+                // Listado de Usuarios
+                List<Admin> admin2 = new DaoAdmin().findAll();
                 req.setAttribute("admin2", admin2);
-                List<Organ> organ2 = new DaoOrgan().findAllActive();
+                List<Organ> organ2 = new DaoOrgan().findAll();
                 req.setAttribute("organ2", organ2);
-                List<Volunteer> volunteer2 = new DaoVolunteer().findAllActive();
+                List<Volunteer> volunteer2 = new DaoVolunteer().findAll();
                 req.setAttribute("volunteer2", volunteer2);
+
+
 
                 // Total de Usuarios
                 int totalAdmin = new DaoAdmin().findAll().size();
@@ -91,7 +99,10 @@ public class ServletAdmin extends HttpServlet {
                 int totalVolunt = new DaoVolunteer().findAll().size();
                 req.setAttribute("totalVolunt", totalVolunt);
 
+                String id_user = req.getParameter("id_user");
+
                 // Foto
+                /*
                 HttpSession sessionM = req.getSession();
                 User userM = (User) sessionM.getAttribute("user");
                 admin = new DaoAdmin().findOneByUser(userM.getId_user());
@@ -107,6 +118,8 @@ public class ServletAdmin extends HttpServlet {
                         req.setAttribute("base64Image", base64Image);
                     }
                 }
+
+                 */
                 redirect = "/pages/administrators/index_admin.jsp";
                 break;
             case "/admin/admin-view":
@@ -221,10 +234,29 @@ public class ServletAdmin extends HttpServlet {
                 List<Admin> admin3 = new DaoAdmin().findAllInactive();
                 req.setAttribute("admin3", admin3);
 
+                // Foto
+
+                HttpSession sessionA3 = req.getSession();
+                User userA3 = (User) sessionA3.getAttribute("user");
+                admin = new DaoAdmin().findOneByUser(userA3.getId_user());
+
+                if (admin != null) {
+                    System.out.println("Entró al admin");
+                    req.setAttribute("admin", admin);
+                    byte[] imageBytes = admin.getImageUser();
+                    System.out.println("Bytes de imagen: " + (imageBytes == null ? "null" : imageBytes.length));
+                    if (imageBytes != null && imageBytes.length > 0) {
+                        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                        //System.out.println("Imagen en Base64: " + base64Image);
+                        req.setAttribute("base64Image", base64Image);
+                    }
+                }
+
                 redirect = "/pages/administrators/administrators_aprob.jsp";
                 break;
 
             case "/admin/porfile":
+
                 System.out.println("Entrando al caso /admin/porfile");
                 HttpSession session = req.getSession();
                 User user = (User) session.getAttribute("user");
@@ -251,23 +283,21 @@ public class ServletAdmin extends HttpServlet {
                 break;
 
             case "/admin/updateAdmin":
-                HttpSession sessionU = req.getSession();
-                User userU = (User) sessionU.getAttribute("user");
-                admin = new DaoAdmin().findOneByUser(userU.getId_user());
+               /* HttpSession session11 = req.getSession();
+                User user11 = (User) session11.getAttribute("user");
+                admin = new DaoAdmin().findOneByUser(user11.getId_user());
                 System.out.println(admin);
                 if (admin != null) {
                     System.out.println("Entró al admin");
                     req.setAttribute("admin", admin);
-                    byte[] imageBytes = admin.getImageUser();
-                    System.out.println("Bytes de imagen: " + (imageBytes == null ? "null" : imageBytes.length));
-                    if (imageBytes != null && imageBytes.length > 0) {
-                        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-                        //System.out.println("Imagen en Base64: " + base64Image);
-                        req.setAttribute("base64Image", base64Image);
                     }
-                }
+
+                */
+
                 redirect = "/pages/administrators/updateAdmin.jsp";
                 break;
+
+
 
 
             default:
@@ -275,6 +305,7 @@ public class ServletAdmin extends HttpServlet {
         }
         req.getRequestDispatcher(redirect).forward(req, resp);
     }
+
 
 
     @Override
@@ -423,6 +454,7 @@ public class ServletAdmin extends HttpServlet {
 
                  */
             case "/admin/create-admin":
+                id_user = req.getParameter("id_user");
                 email = req.getParameter("email");
                 password = req.getParameter("password");
                 name = req.getParameter("name");
@@ -432,7 +464,7 @@ public class ServletAdmin extends HttpServlet {
                 userC.setStatus(false);
 
                 Admin adminC = new Admin();
-                adminC.setId_admin(0L);
+                adminC.setId_admin(Long.valueOf(id_admin));
                 adminC.setName(name);
                 adminC.setUser(userC);
 
@@ -445,22 +477,23 @@ public class ServletAdmin extends HttpServlet {
                 break;
 
             case "/admin/update-admin":
-                id_admin = req.getParameter("id_admin");
+                id_user = req.getParameter("id_user");
                 email = req.getParameter("email");
                 password = req.getParameter("password");
                 name = req.getParameter("name");
+                System.out.println(id_user+ " "+email+" "+password+" "+name);
+
                 User userU = new User();
+                userU.setId_user(Long.valueOf(id_user));
                 userU.setEmail(email);
                 userU.setPassword(password);
                 userU.setStatus(false);
 
                 Admin adminU = new Admin();
-                adminU.setId_admin(Long.valueOf(id_admin));
                 adminU.setName(name);
                 adminU.setUser(userU);
 
-                adminU.setRole(new Role(1, ""));
-                if (new DaoAdmin().update(adminU)) {
+                if (new DaoAdmin().update_admin(adminU)) {
                     redirect = "/admin/main?result=true&message=" + URLEncoder.encode("Administrador actualizado correctamente", StandardCharsets.UTF_8);
                 } else {
                     redirect = "/admin/main?result=false&message=" + URLEncoder.encode("No se pudo actualizar el administrador", StandardCharsets.UTF_8);
@@ -481,17 +514,45 @@ public class ServletAdmin extends HttpServlet {
                     e.printStackTrace();
                 }
                 break;
+            case "/admin/organ/delete":
+                try {
+                    String id = req.getParameter("id");
+                    System.out.println(id);
+                    if (!new DaoOrgan().delete(null, id)) {
+                        redirect = "/admin/main-organ?result=" + true + "&message=" + URLEncoder.encode("Organizacion eliminada correctamente", StandardCharsets.UTF_8);
+                    } else {
+                        throw new Exception("Error");
+                    }
+                } catch (Exception e) {
+                    redirect = "/admin/main-organ?result=" + false + "&message=" + URLEncoder.encode("No se pudo eliminar la organizacion", StandardCharsets.UTF_8);
+                    e.printStackTrace();
+                }
+                break;
             case "/admin/volunteer/delete":
                 try {
                     String id = req.getParameter("id");
                     System.out.println(id);
                     if (!new DaoVolunteer().delete(null, id)) {
-                        redirect = "/admin/main-volunt?result=" + true + "&message=" + URLEncoder.encode("Administrador eliminado correctamente", StandardCharsets.UTF_8);
+                        redirect = "/admin/main-volunt?result=" + true + "&message=" + URLEncoder.encode("Voluntario eliminado correctamente", StandardCharsets.UTF_8);
                     } else {
                         throw new Exception("Error");
                     }
                 } catch (Exception e) {
-                    redirect = "/admin/main-volunt?result=" + false + "&message=" + URLEncoder.encode("No se pudo eliminar el administrador", StandardCharsets.UTF_8);
+                    redirect = "/admin/main-volunt?result=" + false + "&message=" + URLEncoder.encode("No se pudo eliminar el Voluntario", StandardCharsets.UTF_8);
+                    e.printStackTrace();
+                }
+                break;
+                case "/admin/deleteprofile":
+                try {
+                    id_admin = req.getParameter("id");
+                    System.out.println(id_admin);
+                    if (!new DaoAdmin().delete(null, id_admin)) {
+                        redirect = "/user/login?result=" + true + "&message=" + URLEncoder.encode("Voluntario eliminado correctamente", StandardCharsets.UTF_8);
+                    } else {
+                        throw new Exception("Error");
+                    }
+                } catch (Exception e) {
+                    redirect = "/admin/porfile?result=" + false + "&message=" + URLEncoder.encode("No se pudo eliminar el Voluntario", StandardCharsets.UTF_8);
                     e.printStackTrace();
                 }
                 break;

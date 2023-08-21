@@ -345,6 +345,31 @@ public class DaoAdmin {
     }
 
 
+
+    public boolean update_admin(Admin admin) {
+        System.out.println("Bienvenido a la actualizacion");
+        try {
+            conn = new MYSQLConnection().connect();
+            String query = "{CALL actualizarAdminByIdUser(?, ?, ?, ?)}";
+            cs= conn.prepareCall(query);
+            cs.setLong(1, admin.getUser().getId_user());
+            cs.setString(2, admin.getName());
+            cs.setString(3,admin.getUser().getEmail());
+            cs.setString(4, admin.getUser().getPassword());
+            System.out.println(admin.getUser().getId_user());
+            return cs.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            Logger.getLogger(DaoAdmin.class.getName())
+                    .log(Level.SEVERE, "Error  de la actualizacion"
+                            + e.getMessage());
+        } finally {
+            close();
+        }
+        return false;
+    }
+
+
     public void close(){
         try{
             if(conn != null) conn.close();

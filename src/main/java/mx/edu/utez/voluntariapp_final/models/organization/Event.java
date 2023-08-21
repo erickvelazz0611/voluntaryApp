@@ -17,6 +17,7 @@ public class Event {
     private String category;
     private String user_id;
     private String organization_id;
+    private boolean enable;
 
     private User user;
     private Organ organ;
@@ -25,7 +26,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(Long id, String name, String event_date, String description, String street, String cologne, String postal_code, String municipality, String state, String event_time, String category, String user_id, String organization_id, User user, Organ organ, Post post) {
+    public Event(Long id, String name, String event_date, String description, String street, String cologne, String postal_code, String municipality, String state, String event_time, String category, String user_id, String organization_id, User user, Organ organ, Post post, boolean enable) {
         this.id = id;
         this.name = name;
         this.event_date = event_date;
@@ -42,6 +43,7 @@ public class Event {
         this.user = user;
         this.organ = organ;
         this.post = post;
+        this.enable = enable;
     }
 
     public Long getId() {
@@ -172,6 +174,14 @@ public class Event {
         this.post = post;
     }
 
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -191,6 +201,7 @@ public class Event {
                 ", user=" + user +
                 ", organ=" + organ +
                 ", post=" + post +
+                ", enable=" + enable +
                 '}';
     }
 }

@@ -230,7 +230,12 @@
                                             </button>
                                             <hr style="color: white">
                                             <!--=============== <form method="post" action="/admin/delete">===============-->
-                                            <button type="submit" formaction="/admin/delete" class="btn btn-danger col-lg-6">Eliminar cuenta</button>
+                                            <form action="/admin/deleteprofile" method="post" class="btn btn-danger col-lg-6">
+                                                <input hidden value="${user.id_user}" name="id"/>
+                                                <button class="btn btn-danger">
+                                                    Eliminar
+                                                </button>
+                                            </form>
                                             <!--=============== </form>===============-->
                                         </div>
 

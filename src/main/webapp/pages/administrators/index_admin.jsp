@@ -15,7 +15,7 @@
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-</head>
+    <jsp:include page="/layouts/DataTablesCSS.jsp"/>
 </head>
 
 <body>
@@ -130,13 +130,7 @@
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                         <!-- Etiqueta para meter cosas -->
 
-                        <li class="nav-item d-none d-lg-block">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
-                               data-bs-target="#exampleModal">
-                                <input type="text" name="textBuscar" class="form-control">
-                                <i class="ti ti-search"></i>
-                            </a>
-                        </li>
+
                         <!-- Foto de perfil -->
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
@@ -241,7 +235,7 @@
                         <div class="card-body p-3">
                             <div class="table-responsive">
                                 <!-- Tabla -->
-                                <table class="table text-nowrap mb-0 align-middle">
+                                <table id="example" class="table text-nowrap mb-0 align-middle">
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
@@ -254,7 +248,7 @@
                                             <h6 class="fw-semibold mb-0">Status</h6>
                                         </th>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0"></h6>
+                                            <h6 class="fw-semibold mb-0">Activar / Desactivar</h6>
                                         </th>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Actualizar</h6>
@@ -320,11 +314,99 @@
                                             </td>
 
                                             <td class="border-bottom-0">
-                                                <button class="btn btn-outline-dark btn-sm rounded-1 mt-2 ">
-                                                    <a href="/admin/updateAdmin" class="btn">Editar</a>
+
+                                                <button type="button" class="btn btn-warning col-lg-6" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal"
+                                                        data-bs-whatever="@getbootstrap">
+                                                    Editar
                                                 </button>
+
+
+                                                <!-- <a href="edit?id=-->
                                             </td>
                                         </tr>
+                                        <div class="row pt-8">
+                                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Actualización de
+                                                                Perfil
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+
+                                                        <div class="modal-body">
+                                                            <form class="needs-validation" id="admin-form"
+                                                                  novalidate action="/admin/update-admin" method="post" >
+                                                                <input hidden value="${user.id_user}" name="id_user">
+                                                                <div class="row">
+                                                                    <!-- Muestra el id del voluntario
+                                                                    <div class="col-md-6 mb-4">
+                                                                          <div class="form-floating">
+                                                                              <input type="text" name="id" id="id" class="form-control" value="" placeholder="name" disabled>
+
+                                                                              <label for="id">Id</label>
+                                                                          </div>
+                                                                     </div>-->
+                                                                    <div class="col-md-0 mb-4">
+                                                                        <div class="form-floating">
+                                                                            <input type="text" name="name" id="name"
+                                                                                   class="form-control"
+                                                                                   value="${adm.name}"
+                                                                                   placeholder="name"
+                                                                                   required>
+                                                                            <label for="name">Nombre
+                                                                                completo</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-0 mb-4">
+                                                                        <div class="form-floating">
+                                                                            <input type="email" name="email" id="email"
+                                                                                   class="form-control"
+                                                                                   value="${adm.user.email}"
+                                                                                   placeholder="email" required>
+                                                                            <label for="email">Email</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-0 mb-4">
+                                                                        <div class="form-floating form-control-icon">
+                                                                            <input name="password" type="password"
+                                                                                   id="password" value="${adm.user.password}"
+                                                                                   class="form-control"
+                                                                                   placeholder="Contraseña" required/>
+                                                                            <span class="password-toggle"
+                                                                                  onclick="togglePasswordVisibility('password')">
+                                                                            <i id="password-toggle-icon"
+                                                                               class="bi bi-eye-slash"></i>
+                                                                        </span>
+                                                                            <label for="password">Contraseña</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                                        Cancelar
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-warning btn-sm">
+                                                                        Actualizar
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </c:forEach>
                                     </tbody>
                                 </table>
@@ -355,7 +437,7 @@
                         <div class="card-body p-3">
                             <div class="table-responsive">
                                 <!-- Tabla -->
-                                <table class="table text-nowrap mb-0 align-middle">
+                                <table id="example2" class="table text-nowrap mb-0 align-middle">
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
@@ -432,10 +514,95 @@
                                                 </div>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <button class="btn btn-outline-dark btn-sm rounded-1 mt-2 ">
-                                                    <a href="${pageContext.request.contextPath}/organ/updateOrgan" class="btn">Editar</a>
+
+                                                <button type="button" class="btn btn-warning col-lg-6" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal2"
+                                                        data-bs-whatever="@getbootstrap">
+                                                    Editar
                                                 </button>
                                             </td>
+                                            <div class="row pt-8">
+                                                <div class="modal fade" id="exampleModal2" tabindex="-1"
+                                                     aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel2">Actualización de
+                                                                    Perfil
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+
+                                                            <div class="modal-body">
+                                                                <form class="needs-validation" id="organ-form"
+                                                                      novalidate action="/admin/update-admin" method="post" >
+                                                                    <input hidden value="${user.id_user}" name="id_user">
+                                                                    <div class="row">
+                                                                        <!-- Muestra el id del voluntario
+                                                                        <div class="col-md-6 mb-4">
+                                                                              <div class="form-floating">
+                                                                                  <input type="text" name="id" id="id" class="form-control" value="" placeholder="name" disabled>
+
+                                                                                  <label for="id">Id</label>
+                                                                              </div>
+                                                                         </div>-->
+                                                                        <div class="col-md-0 mb-4">
+                                                                            <div class="form-floating">
+                                                                                <input type="text" name="name" id="nameG"
+                                                                                       class="form-control"
+                                                                                       value="${adm.name}"
+                                                                                       placeholder="name"
+                                                                                       required>
+                                                                                <label for="name">Nombre
+                                                                                    completo</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-0 mb-4">
+                                                                            <div class="form-floating">
+                                                                                <input type="email" name="email" id="emailG"
+                                                                                       class="form-control"
+                                                                                       value="${adm.user.email}"
+                                                                                       placeholder="email" required>
+                                                                                <label for="email">Email</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-0 mb-4">
+                                                                            <div class="form-floating form-control-icon">
+                                                                                <input name="password" type="password"
+                                                                                       id="passwordG" value="${adm.user.password}"
+                                                                                       class="form-control"
+                                                                                       placeholder="Contraseña" required/>
+                                                                                <span class="password-toggle"
+                                                                                      onclick="togglePasswordVisibility('password')">
+                                                                            <i id="password-toggle-iconG"
+                                                                               class="bi bi-eye-slash"></i>
+                                                                        </span>
+                                                                                <label for="password">Contraseña</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                                                data-bs-dismiss="modal" aria-label="Close">
+                                                                            Cancelar
+                                                                        </button>
+                                                                        <button type="submit" class="btn btn-warning btn-sm">
+                                                                            Actualizar
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                         </tr>
                                     </c:forEach>
@@ -468,7 +635,7 @@
                         <div class="card-body p-3">
                             <div class="table-responsive">
                                 <!-- Tabla -->
-                                <table class="table text-nowrap mb-0 align-middle">
+                                <table id="example3" class="table text-nowrap mb-0 align-middle">
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
@@ -542,10 +709,95 @@
                                                 </div>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <button class="btn btn-outline-dark btn-sm rounded-1 mt-2 ">
-                                                    <a href="${pageContext.request.contextPath}/volunteer/updateVol" class="btn">Editar</a>
+
+                                                <button type="button" class="btn btn-warning col-lg-6" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal4"
+                                                        data-bs-whatever="@getbootstrap">
+                                                    Editar
                                                 </button>
                                             </td>
+                                            <div class="row pt-8">
+                                                <div class="modal fade" id="exampleModal4" tabindex="-1"
+                                                     aria-labelledby="exampleModalLabel4" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel4">Actualización de
+                                                                    Perfil
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+
+                                                            <div class="modal-body">
+                                                                <form class="needs-validation" id="volunt-form"
+                                                                      novalidate action="/admin/update-admin" method="post" >
+                                                                    <input hidden value="${user.id_user}" name="id_user">
+                                                                    <div class="row">
+                                                                        <!-- Muestra el id del voluntario
+                                                                        <div class="col-md-6 mb-4">
+                                                                              <div class="form-floating">
+                                                                                  <input type="text" name="id" id="id" class="form-control" value="" placeholder="name" disabled>
+
+                                                                                  <label for="id">Id</label>
+                                                                              </div>
+                                                                         </div>-->
+                                                                        <div class="col-md-0 mb-4">
+                                                                            <div class="form-floating">
+                                                                                <input type="text" name="name" id="nameV"
+                                                                                       class="form-control"
+                                                                                       value="${adm.name}"
+                                                                                       placeholder="name"
+                                                                                       required>
+                                                                                <label for="name">Nombre
+                                                                                    completo</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-0 mb-4">
+                                                                            <div class="form-floating">
+                                                                                <input type="email" name="email" id="emailV"
+                                                                                       class="form-control"
+                                                                                       value="${adm.user.email}"
+                                                                                       placeholder="email" required>
+                                                                                <label for="email">Email</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-0 mb-4">
+                                                                            <div class="form-floating form-control-icon">
+                                                                                <input name="password" type="password"
+                                                                                       id="passwordV" value="${adm.user.password}"
+                                                                                       class="form-control"
+                                                                                       placeholder="Contraseña" required/>
+                                                                                <span class="password-toggle"
+                                                                                      onclick="togglePasswordVisibility('password')">
+                                                                            <i id="password-toggle-iconV"
+                                                                               class="bi bi-eye-slash"></i>
+                                                                        </span>
+                                                                                <label for="password">Contraseña</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                                                data-bs-dismiss="modal" aria-label="Close">
+                                                                            Cancelar
+                                                                        </button>
+                                                                        <button type="submit" class="btn btn-warning btn-sm">
+                                                                            Actualizar
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -569,6 +821,7 @@
     <!-- Fin Body Wrapper -->
 </div>
 <!-- JS -->
+<jsp:include page="/layouts/DataTablesJS.jsp"/>
 <script src="../../assets/js/jquery.min.js"></script>
 <script src="../../assets/js/bootstrap.bundle.min.js"></script>
 <script src="../../assets/js/sidebarmenu.js"></script>

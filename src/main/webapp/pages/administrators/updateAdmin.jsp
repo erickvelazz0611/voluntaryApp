@@ -29,14 +29,15 @@
                 <h4 class="fw-bold text-center c-blu">Administrador</h4>
                 <br>
                 <!-- Register -->
-                <form class="needs-validation" id="admin-form" novalidate action="/admin/update-admin" method="post">
+                <form class="needs-validation" id="admin-form" novalidate action="/admin/updateAdmin" method="post">
                     <div class="row">
                         <div class="col-md-0 mb-4">
                             <div class="form-floating">
-                                <input type="text" id="name" name="name" class="form-control" placeholder="Nombre Completo"
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Nombre Completo" value="${admin.name}"
                                        required>
-                                <input hidden value="${admin.id_admin}" name="id_admin">
-                                <label for="email">Nombre Completo</label>
+                                <input hidden value="${user.id_user}" name="id_user">
+                                <label for="email">Nombre Completo
+                                    </label>
 
                             </div>
                         </div>
@@ -44,9 +45,9 @@
                             <div class="form-floating">
                                 <input type="email" id="email" name="email" class="form-control" placeholder="Correo"
                                        required
-                                value="${admin.user.email}">
+                                value="${user.email}">
                                 <label for="email">Email
-                                <c:out value="${admin.user.email}"/>
+
                                 </label>
                             </div>
                         </div>
@@ -55,8 +56,10 @@
                                 <input type="password" id="password" name="password" class="form-control"
                                        placeholder="Contraseña"
                                        required
-                                value="${admin.user.password}">
-                                <label for="password">Contraseña</label>
+                                value="${user.password}">
+                                <label for="password">Contraseña
+
+                                </label>
                                 <div class="password-toggle" onclick="togglePasswordVisibility('password')">
                                     <i id="password-toggle-icon" class="bi bi-eye-slash"></i>
                                 </div>

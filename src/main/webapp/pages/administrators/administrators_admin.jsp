@@ -133,13 +133,6 @@
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                         <!-- Etiqueta para meter cosas -->
 
-                        <li class="nav-item d-none d-lg-block">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
-                               data-bs-target="#exampleModal">
-                                <input type="text" name="textBuscar" class="form-control">
-                                <i class="ti ti-search"></i>
-                            </a>
-                        </li>
                         <!-- Foto de perfil -->
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
