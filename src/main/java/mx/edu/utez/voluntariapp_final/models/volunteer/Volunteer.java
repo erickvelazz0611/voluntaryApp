@@ -4,6 +4,10 @@ import mx.edu.utez.voluntariapp_final.models.Role.Role;
 import mx.edu.utez.voluntariapp_final.models.user.User;
 
 import java.io.InputStream;
+ Fer
+import java.util.Arrays;
+
+ main
 
 public class Volunteer {
 
@@ -18,6 +22,9 @@ public class Volunteer {
     private String user_id;
     private User user;
     private Role role;
+    private String Filename;
+    private byte[] imageVol;
+    InputStream img;
 
     private String Filename;
     private byte[] imageUser;
@@ -26,7 +33,11 @@ public class Volunteer {
     public Volunteer(long l, String name, String surname, String lastanme, String birthday, String email, byte[] imageUser) {
     }
 
+ Fer
+    public Volunteer(Long id, String name, String surname, String lastanme, String birthday, String address, String phone, String curp, String user_id, User user, Role role, byte[] imageVol) {
+
     public Volunteer(Long id, String name, String surname, String lastanme, String birthday, String address, String phone, String curp, String user_id, User user, Role role, byte[] imageUser) {
+ main
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -38,14 +49,43 @@ public class Volunteer {
         this.user_id = user_id;
         this.user = user;
         this.role = role;
+ Fer
+        this.imageVol = imageVol;
+
         this.imageUser = imageUser;
+ main
     }
 
     public Volunteer() {
 
     }
 
-    public Volunteer(long l, String email, String password, String phone) {
+    public Volunteer(long l, String email, String password, String phone,byte[] imageVol) {
+    }
+
+    public InputStream getImg() {
+        return img;
+    }
+
+    public void setImg(InputStream img) {
+        this.img = img;
+    }
+
+    public String getFilename() {
+        return Filename;
+    }
+
+    public void setFilename(String filename) {
+        Filename = filename;
+    }
+    public byte[] getImageVol() {
+        return imageVol;
+    }
+
+
+
+    public void setImageVol(byte[] imageVol) {
+        this.imageVol = imageVol;
     }
 
     public String getFilename() {
@@ -158,5 +198,25 @@ public class Volunteer {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Volunteer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", lastanme='" + lastanme + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", curp='" + curp + '\'' +
+                ", user_id='" + user_id + '\'' +
+                ", user=" + user +
+                ", role=" + role +
+                ", Filename='" + Filename + '\'' +
+                ", imageVol=" + Arrays.toString(imageVol) +
+                ", img=" + img +
+                '}';
     }
 }

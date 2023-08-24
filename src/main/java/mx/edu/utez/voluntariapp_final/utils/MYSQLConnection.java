@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MYSQLConnection {
-    final String DBNAME = "voluntapp",
+    final String DBNAME = "voluntariapp",
             USER = "root",
             PASSWORD = "root",
             TIMEZONE = "America/Mexico_City",
