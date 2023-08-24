@@ -4,7 +4,10 @@ import mx.edu.utez.voluntariapp_final.models.Role.Role;
 import mx.edu.utez.voluntariapp_final.models.user.User;
 
 import java.io.InputStream;
+ Fer
 import java.util.Arrays;
+
+ main
 
 public class Organ {
     private Long id;
@@ -20,6 +23,7 @@ public class Organ {
     private User user;
     private Role role;
     private String Filename;
+ Fer
     private byte[] imageOrgan;
     InputStream img;
 
@@ -27,6 +31,14 @@ public class Organ {
     }
 
     public Organ(Long id, String bussines_name, String street, String cologne, String postal_code, String municipality, String rfc, String phone, String user_id, String state, User user, Role role, String filename, byte[] imageOrgan, InputStream img) {
+
+    private byte[] imageUser;
+    InputStream img;
+    public Organ() {
+    }
+
+    public Organ(Long id, String bussines_name, String street, String cologne, String postal_code, String municipality, String rfc, String phone, String user_id, String state, User user, Role role, byte[] imageUser) {
+ main
         this.id = id;
         this.bussines_name = bussines_name;
         this.street = street;
@@ -39,8 +51,35 @@ public class Organ {
         this.state = state;
         this.user = user;
         this.role = role;
+ Fer
         Filename = filename;
         this.imageOrgan = imageOrgan;
+
+        this.imageUser = imageUser;
+    }
+
+    public String getFilename() {
+        return Filename;
+    }
+
+    public void setFilename(String filename) {
+        Filename = filename;
+    }
+
+    public byte[] getImageUser() {
+        return imageUser;
+    }
+
+    public void setImageUser(byte[] imageUser) {
+        this.imageUser = imageUser;
+    }
+
+    public InputStream getImg() {
+        return img;
+    }
+
+    public void setImg(InputStream img) {
+ main
         this.img = img;
     }
 

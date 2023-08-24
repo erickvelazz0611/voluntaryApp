@@ -193,6 +193,8 @@ public class DaoOrgan {
                 organ.setState(rs.getString("state"));
                 organ.setPhone(rs.getString("phone"));
                 organ.setRfc(rs.getString("rfc"));
+                byte[] imageBytes = rs.getBytes("photo");
+                organ.setImageUser(imageBytes);
                 organ.setUser_id(rs.getString("user_id"));
 
 
@@ -242,10 +244,17 @@ public class DaoOrgan {
     }
     //Update con cambio de imagen
     public boolean update(Organ organ) {
+ Fer
         System.out.println("Bienvenido a la actualizacion");
         try {
             conn = new MYSQLConnection().connect();
             String query = "{CALL actualizar_organizacion(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)}";
+
+        System.out.println("Bienvenido al update organ");
+        try {
+            conn = new MYSQLConnection().connect();
+            String query = "{CALL actualizar_organizacion(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+ main
             cs = conn.prepareCall(query);
             cs.setLong(1, organ.getId());
             cs.setString(2, organ.getBussines_name());
@@ -257,6 +266,7 @@ public class DaoOrgan {
             cs.setString(8, organ.getPhone());
             cs.setString(9, organ.getUser().getEmail());
             cs.setString(10, organ.getUser().getPassword());
+ Fer
             cs.setBytes(11, organ.getImageOrgan());
             boolean updated = cs.executeUpdate() > 0;
             if (updated) {
@@ -266,6 +276,10 @@ public class DaoOrgan {
             }
             return updated;
 
+
+            cs.setBytes(11, organ.getImageUser());
+            return cs.executeUpdate() > 0; // ==1
+ main
         } catch (SQLException e) {
             Logger.getLogger(DaoOrgan.class.getName())
                     .log(Level.SEVERE, "Error de actualizacion "
@@ -313,6 +327,7 @@ public class DaoOrgan {
         return false;
     }
 
+ Fer
     public boolean delete(String id) {
         try {
             conn = new MYSQLConnection().connect();
@@ -324,11 +339,27 @@ public class DaoOrgan {
         } catch (SQLException e) {
             Logger.getLogger(DaoOrgan.class.getName())
                     .log(Level.SEVERE, "Error: No se puede eliminar " + e.getMessage());
+
+    public boolean delete(Long id, String Id) {
+        try {
+            conn = new MYSQLConnection().connect();
+            String query = "{Call DeleteOrganizationByUserId(?)}";
+            cs= conn.prepareCall(query);
+            cs.setString(1, Id);
+            return cs.executeUpdate() == 1;
+        } catch (SQLException e) {
+            Logger.getLogger(DaoAdmin.class.getName())
+                    .log(Level.SEVERE, "Error No se puede eliminar " + e.getMessage());
+ main
         } finally {
             close();
         }
         return false;
     }
+ Fer
+
+
+ main
 
     public void close() {
         try {

@@ -4,7 +4,10 @@ import mx.edu.utez.voluntariapp_final.models.Role.Role;
 import mx.edu.utez.voluntariapp_final.models.user.User;
 
 import java.io.InputStream;
+ Fer
 import java.util.Arrays;
+
+ main
 
 public class Volunteer {
 
@@ -23,10 +26,18 @@ public class Volunteer {
     private byte[] imageVol;
     InputStream img;
 
-    public Volunteer(long l, String name, String surname, String lastanme, String birthday, String email) {
+    private String Filename;
+    private byte[] imageUser;
+    InputStream img;
+
+    public Volunteer(long l, String name, String surname, String lastanme, String birthday, String email, byte[] imageUser) {
     }
 
+ Fer
     public Volunteer(Long id, String name, String surname, String lastanme, String birthday, String address, String phone, String curp, String user_id, User user, Role role, byte[] imageVol) {
+
+    public Volunteer(Long id, String name, String surname, String lastanme, String birthday, String address, String phone, String curp, String user_id, User user, Role role, byte[] imageUser) {
+ main
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -38,7 +49,11 @@ public class Volunteer {
         this.user_id = user_id;
         this.user = user;
         this.role = role;
+ Fer
         this.imageVol = imageVol;
+
+        this.imageUser = imageUser;
+ main
     }
 
     public Volunteer() {
@@ -71,6 +86,30 @@ public class Volunteer {
 
     public void setImageVol(byte[] imageVol) {
         this.imageVol = imageVol;
+    }
+
+    public String getFilename() {
+        return Filename;
+    }
+
+    public void setFilename(String filename) {
+        Filename = filename;
+    }
+
+    public byte[] getImageUser() {
+        return imageUser;
+    }
+
+    public void setImageUser(byte[] imageUser) {
+        this.imageUser = imageUser;
+    }
+
+    public InputStream getImg() {
+        return img;
+    }
+
+    public void setImg(InputStream img) {
+        this.img = img;
     }
 
     public Long getId() {

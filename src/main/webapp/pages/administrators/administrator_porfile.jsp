@@ -143,8 +143,7 @@
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" style="width:35px; height:35px"
-                                     class="rounded-circle">
+                                <img src="data:image/jpeg;base64, ${base64Image}" alt="" class="rounded-circle" style="width:35px; height:35px" />
                             </a>
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -231,7 +230,12 @@
                                             </button>
                                             <hr style="color: white">
                                             <!--=============== <form method="post" action="/admin/delete">===============-->
-                                            <button type="submit" formaction="/admin/delete" class="btn btn-danger col-lg-6">Eliminar cuenta</button>
+                                            <form action="/admin/deleteprofile" method="post" class="btn btn-danger col-lg-6">
+                                                <input hidden value="${user.id_user}" name="id"/>
+                                                <button class="btn btn-danger">
+                                                    Eliminar
+                                                </button>
+                                            </form>
                                             <!--=============== </form>===============-->
                                         </div>
 

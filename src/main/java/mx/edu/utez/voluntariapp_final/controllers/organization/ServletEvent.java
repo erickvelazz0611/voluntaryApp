@@ -103,6 +103,7 @@ public class ServletEvent extends HttpServlet {
                 event.setState(state);
                 event.setCategory(category);
                 event.setStatus(false);
+                event.setEnable(false);
                 User user  =new User();
                 user.setId_user(Long.valueOf(user_id));
                 event.setUser(user);

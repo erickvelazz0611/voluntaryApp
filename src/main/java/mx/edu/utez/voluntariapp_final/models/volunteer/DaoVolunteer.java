@@ -193,6 +193,8 @@ public class DaoVolunteer {
                 volunteer.setAddress(rs.getString("address"));
                 volunteer.setPhone(rs.getString("phone"));
                 volunteer.setCurp(rs.getString("curp"));
+                byte[] imageBytes = rs.getBytes("photo");
+                volunteer.setImageUser(imageBytes);
                 volunteer.setUser_id(rs.getString("user_id"));
                 byte[] imageBytes = rs.getBytes("photo");
                 volunteer.setImageVol(imageBytes);
@@ -240,16 +242,24 @@ public class DaoVolunteer {
     }
 
     public boolean update(Volunteer volunteer) {
+ Fer
         System.out.println("Bienvenido a la actualizacion");
         try {
             conn = new MYSQLConnection().connect();
             String query = "{CALL actualizar_voluntario(?, ?, ?, ?, ?,?)}";
+
+        System.out.println("Bienvenido al mundo del sida");
+        try {
+            conn = new MYSQLConnection().connect();
+            String query = "{CALL actualizar_voluntario(?, ?, ?, ?, ?, ?)}";
+ main
             cs= conn.prepareCall(query);
             cs.setLong(1, volunteer.getId());
             cs.setString(2, volunteer.getAddress());
             cs.setString(3, volunteer.getPhone());
             cs.setString(4, volunteer.getUser().getEmail());
             cs.setString(5, volunteer.getUser().getPassword());
+ Fer
             cs.setBytes(6, volunteer.getImageVol());
             boolean updated = cs.executeUpdate() > 0;
             if (updated) {
@@ -270,6 +280,10 @@ public class DaoVolunteer {
             }*/
 
 
+            cs.setBytes(6, volunteer.getImageUser());
+            return cs.executeUpdate() > 0;
+ main
+
         } catch (Exception e) {
             Logger.getLogger(DaoVolunteer.class.getName())
                     .log(Level.SEVERE, "Error de la actualización " + e.getMessage());
@@ -279,6 +293,7 @@ public class DaoVolunteer {
         return false;
     }
 
+ Fer
     public boolean deleteByUserId(int userId) {
         boolean result = false;
         CallableStatement cstmt = null;
@@ -318,6 +333,23 @@ public class DaoVolunteer {
     } else {
         System.out.println("Imagen no disponible.");
     }*/
+
+    public boolean delete(Long id, String Id) {
+        try {
+            conn = new MYSQLConnection().connect();
+            String query = "{Call DeleteVolunteerByUserId(?)}";
+            cs= conn.prepareCall(query);
+            cs.setString(1, Id);
+            return cs.executeUpdate() == 1;
+        } catch (SQLException e) {
+            Logger.getLogger(DaoAdmin.class.getName())
+                    .log(Level.SEVERE, "Error No se puede eliminar " + e.getMessage());
+        } finally {
+            close();
+        }
+        return false;
+    }
+ main
 
     public void close(){
         try{

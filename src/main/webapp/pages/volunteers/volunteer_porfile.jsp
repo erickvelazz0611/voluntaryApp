@@ -112,6 +112,11 @@
                                 <img src="data:image/jpeg;base64, ${base64Image}" alt="" style="width:35px; height:35px"
                                      class="rounded-circle">
                             </a>
+ Fer
+
+                            <!-- -->
+
+ main
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
                                  aria-labelledby="drop2">
@@ -242,9 +247,14 @@
                                                     </div>
 
                                                     <div class="modal-body">
+ Fer
                                                         <form class="needs-validation" id="volunteer-form" novalidate
                                                               action="/volunteer/update" method="post"
                                                               enctype="multipart/form-data">
+
+                                                        <form  class="needs-validation" id="volunteer-form" novalidate
+                                                              action="/volunteer/update" method="post" enctype="multipart/form-data">
+ main
                                                             <input hidden value="${volunteer.id}" name="id">
 
                                                             <div class="row ">
@@ -367,6 +377,14 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-0 mb-4">
+                                                                <div class="form-floating form-control-icon">
+                                                                    <input name="profilePic" type="file"
+                                                                           id="voluntteerPicupload"
+                                                                           class="form-control"/>
+                                                                    <label for=voluntteerPicupload>Cambiar foto</label>
+                                                                </div>
+                                                            </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-danger btn-sm"
                                                                         data-bs-dismiss="modal" aria-label="Close">
@@ -439,7 +457,6 @@
 <!-- Sweet Alert JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.all.min.js"></script>
 <script>
-    // Función para mostrar la confirmación de SweetAlert
     function mostrarConfirmacion() {
         if (document.getElementById("volunteer-form").checkValidity()) {
             Swal.fire({

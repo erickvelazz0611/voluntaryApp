@@ -288,6 +288,14 @@
                                                                 </div>
 
                                                             </div>
+                                                            <div class="col-md-0 mb-4">
+                                                                <div class="form-floating form-control-icon">
+                                                                    <input name="profilePic" type="file"
+                                                                           id="organPicupload"
+                                                                           class="form-control"/>
+                                                                    <label for=organPicupload>Cambiar foto</label>
+                                                                </div>
+                                                            </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-danger btn-sm"
                                                                         data-bs-dismiss="modal" aria-label="Close">
@@ -373,6 +381,10 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Si el usuario hace clic en "Sí", procedemos a enviar el formulario manualmente.
+ Fer
+
+                    //enviarFormulario();
+ main
                     document.getElementById('organ-form').submit();
                 }
             });
@@ -391,7 +403,7 @@
                 // La solicitud se ha completado correctamente.
                 // Aquí manejamos la respuesta del servidor y mostramos la alerta de éxito o error.
                 if (xhr.responseText.includes("success")) {
-                    mostrarAlerta('¡Éxito! Organización actualizada correctamente.', 'success', true);
+                    mostrarAlerta('¡Éxito! Voluntario actualizado correctamente.', 'success', true);
                 } else {
                     mostrarAlerta('¡Error! Acción no realizada correctamente.', 'error', false);
                 }
