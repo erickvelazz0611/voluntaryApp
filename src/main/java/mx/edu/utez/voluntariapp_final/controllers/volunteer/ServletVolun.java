@@ -1,25 +1,22 @@
 package mx.edu.utez.voluntariapp_final.controllers.volunteer;
-
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import mx.edu.utez.voluntariapp_final.models.Role.Role;
 
-import mx.edu.utez.voluntariapp_final.models.administrators.Admin;
-import mx.edu.utez.voluntariapp_final.models.administrators.DaoAdmin;
-import mx.edu.utez.voluntariapp_final.models.organization.DaoEvent;
-import mx.edu.utez.voluntariapp_final.models.organization.Event;
+
 import mx.edu.utez.voluntariapp_final.models.user.User;
 import mx.edu.utez.voluntariapp_final.models.volunteer.DaoVolunteer;
 import mx.edu.utez.voluntariapp_final.models.volunteer.Volunteer;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.UUID;
+import java.util.Base64;
+
 
 @WebServlet(name = "volunteers ", urlPatterns = {
 
@@ -38,11 +35,13 @@ import java.util.UUID;
         "/volunteer/postulates"
 
 })
+@MultipartConfig
 public class ServletVolun extends HttpServlet {
     private String action;
     private String redirect = "/volunteer/main";
     private String email, password, id, name, surname, lastanme, birthday, address, phone, curp;
     private Volunteer volunteer;
+    private byte[] imageVol;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -81,17 +80,29 @@ public class ServletVolun extends HttpServlet {
                 }
                 break;*/
             case "/volunteer/porfile":
+                System.out.println("Entrando al caso /volunteer/porfile");
                 HttpSession session = req.getSession();
                 User user = (User) session.getAttribute("user");
                 volunteer = new DaoVolunteer().findOneByUser(user.getId_user());
                 System.out.println(volunteer);
                 if (volunteer != null) {
+                    System.out.println("Entró al admin");
                     req.setAttribute("volunteer", volunteer);
+                    byte[] imageBytes = volunteer.getImageVol();
+                    System.out.println("Bytes de imagen: " + (imageBytes == null ? "null" : imageBytes.length));
+                    if (imageBytes != null && imageBytes.length > 0) {
+                        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                        System.out.println("Imagen en Base64: " + base64Image);
+                        req.setAttribute("base64Image", base64Image);
+                    }
                     redirect = "/pages/volunteers/volunteer_porfile.jsp";
                 } else {
+                    System.out.println("No se encontró el voluntario");
                     redirect = "/volunteer/main";
                 }
                 break;
+
+
 
             default:
                 System.out.println(action);
@@ -163,36 +174,44 @@ public class ServletVolun extends HttpServlet {
                 }
                 break;
             case "/volunteer/update":
+                Volunteer volunteer2 = new Volunteer();
 
-                    // Obtener los valores de los parámetros del formulario
-                    id = req.getParameter("id");
-                    address = req.getParameter("address");
-                    phone = req.getParameter("phone");
-                    email = req.getParameter("email");
-                    password = req.getParameter("password");
-                    System.out.println(id + address + phone + email + password);
-                    // Crear y configurar el objeto "Voluntario"
-                    Volunteer volunteer = new Volunteer();
-                    volunteer.setId(Long.valueOf(id));
-                    volunteer.setAddress(address);
-                    volunteer.setPhone(phone);
-                    // Crear y configurar el objeto "User"
-                    User user = new User();
-                    user.setEmail(email);
-                    user.setPassword(password);
-                    volunteer.setUser(user);
+                id = req.getParameter("id");
+                address = req.getParameter("address");
+                phone = req.getParameter("phone");
+                email = req.getParameter("email");
+                password = req.getParameter("password");
+
+
+
+                Part filePart = req.getPart("profilePic");
+                if (filePart != null && filePart.getSize() > 0) {
+                    InputStream fileContent = filePart.getInputStream();
+                    byte[] imageBytes = fileContent.readAllBytes();
+                    volunteer2.setImageVol(imageBytes);
+                    System.out.println("Imagen cargada correctamente. Tamaño: " + imageBytes.length + " bytes.");
+                }
+                volunteer2.setId(Long.valueOf(id));
+                volunteer2.setAddress(address);
+                volunteer2.setPhone(phone);
+                // Crear y configurar el objeto "User"
+                User user = new User();
+                user.setEmail(email);
+                user.setPassword(password);
+                volunteer2.setUser(user);
                 try {
-                    if (new DaoVolunteer().update(volunteer))
-                        redirect = "/volunteer/main?result=false&message=" + URLEncoder.encode("¡Error! Acción no realizada correctamente.", StandardCharsets.UTF_8);
+                    if (new DaoVolunteer().update(volunteer2))
+                        redirect = "/volunteer/porfile";
                     else{
-
+                        System.out.println("SI lllega juaz");
+                        redirect = "/volunteer/porfile";
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    redirect = "/volunteer/porfile?result=false&message=" + URLEncoder.encode("No se pudo guardar la organización", StandardCharsets.UTF_8);
+                    redirect = "/volunteer/main";
                 }
-                break;
-
+                response.sendRedirect(redirect);
+                return;
             default:
                 redirect = "/volunteer/main";
 
@@ -200,6 +219,7 @@ public class ServletVolun extends HttpServlet {
 
         response.sendRedirect(req.getContextPath() + redirect);
     }
+
 
 
 }

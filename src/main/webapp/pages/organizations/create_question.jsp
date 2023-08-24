@@ -5,7 +5,6 @@
   Time: 11:28 a. m.
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 
@@ -20,51 +19,45 @@
 </head>
 
 <body>
-<div class="text-md-start p-4">
-    <img src="../assets/images/logos_voluntariapp/logo_extend.png" width="200" alt="">
-</div>
 <div class="container-fluid d-flex align-items-center justify-content-center">
     <div class="container bg-white rounded shadow">
         <div class="row align-items-stretch">
             <div class="col bg-white p-5 rounded-end">
-                <h3 class="fw-bold text-center">Crear Formulario</h3>
+                <h3 class="fw-bold text-center">Crear Preguntas</h3>
                 <br>
-                <div class="form-floating">
-                    <input type="hidden" id="organ_id" name="organ_id" value="<%= session.getAttribute("organId")%>" class="form-control">
-
-                </div>
-                <!-- Register -->
-                <form class="needs-validation" id="event-form"  action="/forms/save" method="post">
-                    <div class="row mb-3">
-                        <div class="col">
+                <form class="needs-validation" id="event-form" action="/questions/save" method="post">
+                    <input hidden value="${id}" name="formId">
+                    <div class="row">
+                        <div class="col-md-0 mb-4">
                             <div class="form-floating">
-                                <select name="eventId" id="opciones" class="form-select">
-                                    <option value="">Seleccione...</option>
-                                    <c:forEach var="event" items="${events}">
-                                        <option value="${event.id}">
-                                            <c:out value="${event.name}"/><c:out value="${event.event_date}"/>
-                                        </option>
-                                    </c:forEach>
-                                </select>
-                                <label for="opciones">Seleccionar evento</label>
+                                <input type="text" id="question" name="question" class="form-control" required>
+                                <label for="question">¿Pregunta?</label>
                             </div>
                         </div>
-                        <br><br>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <div class="form-floating">
-                                    <input type="text" id="name" name="name" class="form-control"  required>
-                                    <label for="name">Nombre del Formulario</label>
-                                </div>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-md-0 mb-4">
+                            <div class="form-floating">
+                                <input type="text" id="answer1" name="answer1" class="form-control"  required>
+                                <label for="answer1">Respuesta</label>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <div class="form-floating">
-                                    <input type="text" id="description" name="description" class="form-control" placeholder="#"
-                                           required>
-                                    <label for="description">Descripción</label>
-                                </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-0 mb-4">
+                            <div class="form-floating">
+                                <input type="text" id="answer2" name="answer2" class="form-control" required>
+                                <label for="answer2">Respuestas</label>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-md-0 mb-4">
+                            <div class="form-floating">
+                                <input type="text" id="answer3" name="answer3" class="form-control" required>
+                                <label for="answer3">Respuestas</label>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -74,6 +67,7 @@
                             </a>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -83,6 +77,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     (function () {
         'use strict'

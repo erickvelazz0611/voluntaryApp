@@ -98,7 +98,7 @@ public class DaoOrgan {
         return organ2;
     }
 
-    //Listado para mostrar las organizaciones que aun no etan activadas
+    //Listado para mostrar las organizaciones que hasta no etan activadas
     public List<Organ> findAllInactive() {
         List<Organ> organ = new ArrayList<>();
         Organ organ1 = null;
@@ -141,6 +141,11 @@ public class DaoOrgan {
 
         return organ;
     }
+
+
+    // Listado para mostrar las organizaciones
+
+    // PENDIENTE PORFI DEBES SABER COMO VRG HACER ESTO OK??
 
 
     public Organ findOne(Long id) {
@@ -226,7 +231,7 @@ public class DaoOrgan {
             cs.setString(11, organ.getRfc());
             cs.setString(12, organ.getPhone());
             cs.executeQuery();
-           // System.out.println("Ayuddddddddddddddaaaaaaaaaaaaaaa");
+            // System.out.println("Ayuddddddddddddddaaaaaaaaaaaaaaa");
             return true;
         } catch (SQLException e) {
             Logger.getLogger(DaoOrgan.class.getName()).log(Level.SEVERE, "Error save " + e.getMessage());
@@ -235,11 +240,12 @@ public class DaoOrgan {
         }
         return false;
     }
-
+    //Update con cambio de imagen
     public boolean update(Organ organ) {
+        System.out.println("Bienvenido a la actualizacion");
         try {
             conn = new MYSQLConnection().connect();
-            String query = "CALL actualizar_organizacion(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            String query = "{CALL actualizar_organizacion(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)}";
             cs = conn.prepareCall(query);
             cs.setLong(1, organ.getId());
             cs.setString(2, organ.getBussines_name());
@@ -251,17 +257,27 @@ public class DaoOrgan {
             cs.setString(8, organ.getPhone());
             cs.setString(9, organ.getUser().getEmail());
             cs.setString(10, organ.getUser().getPassword());
-           // System.out.println("Ayuddddddddddddddaaaaaaaaaaaaaaa");
-            return cs.executeUpdate() > 0; // ==1
+            cs.setBytes(11, organ.getImageOrgan());
+            boolean updated = cs.executeUpdate() > 0;
+            if (updated) {
+                System.out.println("Actualización realizada con éxito.");
+            } else {
+                System.out.println("La actualización no se completó.");
+            }
+            return updated;
+
         } catch (SQLException e) {
             Logger.getLogger(DaoOrgan.class.getName())
-                    .log(Level.SEVERE, "Error findAll"
+                    .log(Level.SEVERE, "Error de actualizacion "
                             + e.getMessage());
         } finally {
             close();
         }
         return false;
     }
+
+
+
 
     public boolean active(Long id) {
         try{
@@ -297,7 +313,22 @@ public class DaoOrgan {
         return false;
     }
 
-
+    public boolean delete(String id) {
+        try {
+            conn = new MYSQLConnection().connect();
+            String query = "CALL DeleteOrganizationByUserId(?);";
+            cs = conn.prepareCall(query);
+            cs.setString(1, id);
+            int affectedRows = cs.executeUpdate(); // La cantidad de filas afectadas
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            Logger.getLogger(DaoOrgan.class.getName())
+                    .log(Level.SEVERE, "Error: No se puede eliminar " + e.getMessage());
+        } finally {
+            close();
+        }
+        return false;
+    }
 
     public void close() {
         try {

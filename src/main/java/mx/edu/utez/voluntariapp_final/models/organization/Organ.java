@@ -3,6 +3,9 @@ package mx.edu.utez.voluntariapp_final.models.organization;
 import mx.edu.utez.voluntariapp_final.models.Role.Role;
 import mx.edu.utez.voluntariapp_final.models.user.User;
 
+import java.io.InputStream;
+import java.util.Arrays;
+
 public class Organ {
     private Long id;
     private String bussines_name;
@@ -16,10 +19,14 @@ public class Organ {
     private String state;
     private User user;
     private Role role;
+    private String Filename;
+    private byte[] imageOrgan;
+    InputStream img;
+
     public Organ() {
     }
 
-    public Organ(Long id, String bussines_name, String street, String cologne, String postal_code, String municipality, String rfc, String phone, String user_id, String state, User user, Role role) {
+    public Organ(Long id, String bussines_name, String street, String cologne, String postal_code, String municipality, String rfc, String phone, String user_id, String state, User user, Role role, String filename, byte[] imageOrgan, InputStream img) {
         this.id = id;
         this.bussines_name = bussines_name;
         this.street = street;
@@ -32,6 +39,9 @@ public class Organ {
         this.state = state;
         this.user = user;
         this.role = role;
+        Filename = filename;
+        this.imageOrgan = imageOrgan;
+        this.img = img;
     }
 
     public Long getId() {
@@ -81,13 +91,6 @@ public class Organ {
     public void setMunicipality(String municipality) {
         this.municipality = municipality;
     }
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
 
     public String getRfc() {
         return rfc;
@@ -113,7 +116,13 @@ public class Organ {
         this.user_id = user_id;
     }
 
+    public String getState() {
+        return state;
+    }
 
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public User getUser() {
         return user;
@@ -131,21 +140,27 @@ public class Organ {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "Organ{" +
-                "id=" + id +
-                ", bussines_name='" + bussines_name + '\'' +
-                ", street='" + street + '\'' +
-                ", cologne='" + cologne + '\'' +
-                ", postal_code='" + postal_code + '\'' +
-                ", municipality='" + municipality + '\'' +
-                ", state='" + state + '\'' +
-                ", rfc='" + rfc + '\'' +
-                ", phone='" + phone + '\'' +
-                ", user_id='" + user_id + '\'' +
-                ", user=" + user +
-                ", role=" + role +
-                '}';
+    public String getFilename() {
+        return Filename;
+    }
+
+    public void setFilename(String filename) {
+        Filename = filename;
+    }
+
+    public byte[] getImageOrgan() {
+        return imageOrgan;
+    }
+
+    public void setImageOrgan(byte[] imageOrgan) {
+        this.imageOrgan = imageOrgan;
+    }
+
+    public InputStream getImg() {
+        return img;
+    }
+
+    public void setImg(InputStream img) {
+        this.img = img;
     }
 }

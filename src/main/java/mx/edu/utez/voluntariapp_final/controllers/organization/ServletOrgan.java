@@ -1,11 +1,9 @@
 package mx.edu.utez.voluntariapp_final.controllers.organization;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import mx.edu.utez.voluntariapp_final.models.Role.Role;
 import mx.edu.utez.voluntariapp_final.models.organization.DaoEvent;
 import mx.edu.utez.voluntariapp_final.models.organization.DaoOrgan;
@@ -14,44 +12,34 @@ import mx.edu.utez.voluntariapp_final.models.organization.Organ;
 import mx.edu.utez.voluntariapp_final.models.user.User;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
-@WebServlet(name = "organs", urlPatterns = {
-        "/organ/main",
-        "/organ/register",
-        "/organ/organ",
-        "/organ/organ-view",
-        "/organ/save",
-        "/organ/organ-view-update",
-        "/organ/update",
-        "/organ/delete",
-        "/event/events",
+@WebServlet(name = "organs", urlPatterns = {"/organ/main", "/organ/register", "/organ/organ", "/organ/organ-view", "/organ/save", "/organ/organ-view-update", "/organ/update", "/organ/delete", "/event/events",
 
         /*Redirecciones de Organizaciones*/
-        "/organ/events",
-        "/organ/surveys",
-        "/organ/postulations",
-        "/organ/aprob",
-        "/organ/porfile",
+        "/organ/events", "/organ/surveys", "/organ/postulations", "/organ/aprob", "/organ/porfile",
 
         /*======================================*/
         /*Redirecciones del Formulario y Eventos*/
         "/organ/create_event",                   /*Campos Temporales*/
         "/organ/create_forms",
         /*======================================*/
-        "/forms/save"
+        //  "/forms/save"
 
 
 })
+@MultipartConfig
 public class ServletOrgan extends HttpServlet {
     private String action;
     private String redirect = "/organ/main";
 
     private String email;
     private String password;
-    private boolean Active;
+//    private boolean Active;
 
     private String id;
     private String bussines_name;
@@ -63,10 +51,13 @@ public class ServletOrgan extends HttpServlet {
     private String rfc;
     private String phone;
 
+    List<Event> events2;
+
+    private HttpSession session;
+    private byte[] imageOrgan;
 
     private Organ organ;
     private Event event;
-
 
 
     @Override
@@ -80,29 +71,55 @@ public class ServletOrgan extends HttpServlet {
                 redirect = "/pages/organizations/index_organ.jsp";
                 break;
             /*Redirecciones del Organizador*/
-           case "/organ/events":
-               List<Event> events2 = new DaoEvent().relacion_Organ();
-               request.setAttribute("events2", events2);
-               System.out.println("Listado de eventos"+events2);
-
+            case "/organ/events":
+                session = request.getSession();
+                if (session != null) {
+                    id = session.getAttribute("organId").toString();
+                    events2 = new DaoEvent().relacion_Organ(Integer.parseInt(id));
+                }
+                request.setAttribute("events2", events2);
                 redirect = "/pages/organizations/organizations_events.jsp";
                 break;
+
             case "/organ/surveys":
+                session = request.getSession();
+                if (session != null) {
+                    id = session.getAttribute("organId").toString();
+                    events2 = new DaoEvent().relacion_Organ(Integer.parseInt(id));
+                    request.setAttribute("events", events2);
+                }
                 redirect = "/pages/organizations/organizations_surveys.jsp";
                 break;
+            //Jsp de redireccion del fomulario completo
+
+            //Mostrar lo eventos
             case "/organ/postulations":
+                session = request.getSession();
+                if (session != null) {
+                    id = session.getAttribute("organId").toString();
+                    events2 = new DaoEvent().relacion_Organ(Integer.parseInt(id));
+                    request.setAttribute("postulantes", events2);
+
+                }
                 redirect = "/pages/organizations/organizations_postulates.jsp";
                 break;
             case "/organ/aprob":
                 redirect = "/pages/organizations/organizations_aprob.jsp";
                 break;
             case "/organ/porfile":
-                HttpSession session = request.getSession();
+                session = request.getSession();
                 User user = (User) session.getAttribute("user");
                 organ = new DaoOrgan().findOneByUser(user.getId_user());
                 System.out.println(organ);
                 if (organ != null) {
                     request.setAttribute("organ", organ);
+                    byte[] imageBytes = organ.getImageOrgan();
+                    System.out.println("Bytes de imagen: " + (imageBytes == null ? "null" : imageBytes.length));
+                    if (imageBytes != null && imageBytes.length > 0) {
+                        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                        System.out.println("Imagen en Base64: " + base64Image);
+                        request.setAttribute("base64Image", base64Image);
+                    }
                     redirect = "/pages/organizations/organizations_porfile.jsp";
                 } else {
                     redirect = "/organ/main";
@@ -121,14 +138,8 @@ public class ServletOrgan extends HttpServlet {
                     redirect = "/organ/organs?result" + false + "&message" + URLEncoder.encode("", StandardCharsets.UTF_8);
                 }
                 break;
-                /*===================================*/
-                   /*Eventos*/
-            case "/event/events":
-                List<Event> events = new DaoEvent().findAll();
-                request.setAttribute("event", events);
-                redirect="/organ/events";
+            /*===================================*/
 
-                break;
 
             /*====================================================*/
             /*Redirecciones del Formulario y Eventos*/
@@ -136,6 +147,13 @@ public class ServletOrgan extends HttpServlet {
                 redirect = "/pages/organizations/create_event.jsp";
                 break;
             case "/organ/create_forms":
+                session = request.getSession();
+                if (session != null) {
+                    id = session.getAttribute("organId").toString();
+                    events2 = new DaoEvent().relacion_Organ(Integer.parseInt(id));
+                    request.setAttribute("events", events2);
+
+                }
                 redirect = "/pages/organizations/create_forms.jsp";
                 break;
             /*=====================================================*/
@@ -206,59 +224,71 @@ public class ServletOrgan extends HttpServlet {
                 }
                 break;
             case "/organ/update":
-                    // Obtener los valores de los parámetros del formulario
-                    id = request.getParameter("id");
-                    bussines_name = request.getParameter("bussines_name");
-                    municipality = request.getParameter("municipality");
-                    state = request.getParameter("state");
-                    postal_code = request.getParameter("postal_code");
-                    cologne = request.getParameter("cologne");
-                    street = request.getParameter("street");
-                    phone = request.getParameter("phone");
-                    email=request.getParameter("email");
-                    password=request.getParameter("password");
-                    System.out.println(id + bussines_name+street+cologne+postal_code+municipality+state + phone + email + password);
-                    // Crear y configurar el objeto "Voluntario"
-                    Organ organ = new Organ();
-                    organ.setId(Long.valueOf(id));
-                    organ.setBussines_name(bussines_name);
-                    organ.setMunicipality(municipality);
-                    organ.setState(state);
-                    organ.setPostal_code(postal_code);
-                    organ.setCologne(cologne);
-                    organ.setStreet(street);
-                    organ.setPhone(phone);
-
-                    // Crear y configurar el objeto "User"
-                    User user = new User();
-                    user.setEmail(email);
-                    user.setPassword(password);
-                    organ.setUser(user);
-                    try {
-                        // Guardar el objeto "Organ" en la base de datos
-                        if (new DaoOrgan().update(organ)) {
-                            redirect = "/organ/main?result=true&message=" + URLEncoder.encode("Organizacion guardada correctamente", StandardCharsets.UTF_8);
-                        } else {
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        redirect = "/organ/porfile?result=false&message=" + URLEncoder.encode("No se pudo guardar la organización", StandardCharsets.UTF_8);
-                    }
-                    break;
-                    case  "/forms/save":
-
-                        break;
-           /* case "/organ/delete":
+                Organ organ = new Organ();
+                // Obtener los valores de los parámetros del formulario
                 id = request.getParameter("id");
-                if (new DaoAdmin().delete(Long.parseLong(id))) {
-                    redirect = "/organ/organs?result=" + true + "&message=" + URLEncoder.encode("Administrador eliminado correctamente", StandardCharsets.UTF_8);
-                } else {
-                    redirect = "/organ/organs?result=" + false + "&message=" + URLEncoder.encode("No se pudo eliminar el administrador", StandardCharsets.UTF_8);
+                bussines_name = request.getParameter("bussines_name");
+                municipality = request.getParameter("municipality");
+                state = request.getParameter("state");
+                postal_code = request.getParameter("postal_code");
+                cologne = request.getParameter("cologne");
+                street = request.getParameter("street");
+                phone = request.getParameter("phone");
+                email = request.getParameter("email");
+                password = request.getParameter("password");
+                Part filePart = request.getPart("profilePic");
+                if (filePart != null && filePart.getSize() > 0) {
+                    InputStream fileContent = filePart.getInputStream();
+                    byte[] imageBytes = fileContent.readAllBytes();
+                    organ.setImageOrgan(imageBytes);
+                    System.out.println("Imagen cargada correctamente. Tamaño: " + imageBytes.length + " bytes.");
                 }
-                redirect = "/organ/organs";
-                break;*/
+
+
+                organ.setId(Long.valueOf(id));
+                organ.setBussines_name(bussines_name);
+                organ.setMunicipality(municipality);
+                organ.setState(state);
+                organ.setPostal_code(postal_code);
+                organ.setCologne(cologne);
+                organ.setStreet(street);
+                organ.setPhone(phone);
+
+                // Crear y configurar el objeto "User"
+                User user = new User();
+                user.setEmail(email);
+                user.setPassword(password);
+                organ.setUser(user);
+                try {
+                    if (new DaoOrgan().update(organ))
+
+                        redirect = "/organ/porfile";
+                    else {
+                        System.out.println("SI lllega juaz");
+                        redirect = "/organ/porfile";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    redirect = "/organ/main";
+                }
+                response.sendRedirect(redirect);
+                return;
+
+            //Parte de Jassiel
+            case "/organ/delete":
+                String userId = request.getParameter("user_id");
+                System.out.println(userId);
+
+                // Llamar al método delete con el userId directamente
+                if (new DaoOrgan().delete(userId)) {
+                    redirect = "/api/auth/login?result=" + true + "&message=" + URLEncoder.encode("Organización eliminada correctamente", StandardCharsets.UTF_8);
+                } else {
+                    redirect = "/organ/main?result=" + false + "&message=" + URLEncoder.encode("No se pudo eliminar la organización", StandardCharsets.UTF_8);
+                }
+                break;
+
             default:
-                redirect = "/organ/organs";
+                redirect = "/organ/main";
         }
         response.sendRedirect(request.getContextPath() + redirect);
     }

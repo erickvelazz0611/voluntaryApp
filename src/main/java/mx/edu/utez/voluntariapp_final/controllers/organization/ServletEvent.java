@@ -18,7 +18,8 @@ import java.io.IOException;
         "/event/save",
         "/event/all",
         "/event/porfile",
-        //"/event/events"
+        "/events/id"
+
 
 })
 public class ServletEvent extends HttpServlet {
@@ -33,26 +34,29 @@ public class ServletEvent extends HttpServlet {
     private String postal_code;
     private String municipality,state,user_id,category,organ_id;
     private String event_time;
-     private Event event;
+
+    private Event event;
+    private DaoEvent miDao = new DaoEvent();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         action = request.getServletPath();
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html");
+
+
+
+
+
         switch (action) {
-         /*  case "/event/events":
-               List<Event> users = new DaoEvent().findAll();
-               request.setAttribute("users", users);
-               redirect="/pages/organizations/organizations_event.jsp";
-
-               break;*/
-
-            default:
-                System.out.println(action);
         }
+
+
+
+
+
         request.getRequestDispatcher(redirect).forward(request, response);
+
 
     }
 
@@ -62,16 +66,8 @@ public class ServletEvent extends HttpServlet {
         response.setContentType("text/html");
         action = request.getServletPath();
         switch (action) {
-             /*case "/organ/organ-view-update":
-                id = request.getParameter("id");
-                Event event = new DaoEvent().findOne(id != null ? Long.parseLong(id) : 0);
-                if (event != null) {
-                    request.setAttribute("event", event);
-                    redirect = "/pages/organizations/update_organ.jsp";
-                } else {
-                    redirect = "/organ/organs?result" + false + "&message" + URLEncoder.encode("", StandardCharsets.UTF_8);
-                }
-                break;*/
+
+
             case "/event/save":
                 // Obtener los valores de los parámetros del formulario
                 name = request.getParameter("name");
@@ -87,6 +83,7 @@ public class ServletEvent extends HttpServlet {
                 //System.out.println(category);
                 user_id=request.getParameter("user_id");
                 organ_id=request.getParameter("organ_id");
+
                 //System.out.println(organ_id);
                 System.out.println(name+"|"+event_date+"|"+event_time+"|"+description+"|"+street+"|"+cologne+
                         "|"+postal_code+"|"+municipality+"|"+state+"|"+category+"|"+user_id+"|"+organ_id+"|");
@@ -94,7 +91,7 @@ public class ServletEvent extends HttpServlet {
 
                 // Crear y configurar el objeto "Organ"
                 Event event = new Event();
-               // event.setId(0L);
+                // event.setId(0L);
                 event.setName(name);
                 event.setEvent_date(event_date);
                 event.setEvent_time(event_time);
@@ -105,25 +102,21 @@ public class ServletEvent extends HttpServlet {
                 event.setMunicipality(municipality);
                 event.setState(state);
                 event.setCategory(category);
-
+                event.setStatus(false);
                 User user  =new User();
                 user.setId_user(Long.valueOf(user_id));
                 event.setUser(user);
                 System.out.println(event.getUser().getId_user());
-
                 Organ organ =new Organ();
                 organ.setId(Long.valueOf(organ_id));
                 event.setOrgan(organ);
                 System.out.println(event.getOrgan().getId());
-
-
-
                 // Configurar el rol (asumiendo que 2 es el ID del rol para organizaciones)
                 try {
                     // Guardar el objeto "Evento" en la base de datos
                     if (new DaoEvent().save(event)) {
                         // Redirigir con mensaje de éxito
-                        response.sendRedirect("/event/events?result=true&message=Evento%20guardado%20correctamente");
+                        response.sendRedirect("/organ/events?result=true&message=Evento%20guardado%20correctamente");
                     } else {
 
                     }
@@ -133,7 +126,45 @@ public class ServletEvent extends HttpServlet {
                     response.sendRedirect("/organ/main?result=false&message=No%20se%20pudo%20guardar%20el%20evento");
                 }
                 break;
+
             case "/event/update":
+                id=request.getParameter("id");
+                name = request.getParameter("name");
+                event_date = request.getParameter("event_day");
+                event_time = request.getParameter("event_time");
+                description = request.getParameter("description");
+                street = request.getParameter("street");
+                cologne = request.getParameter("cologne");
+                postal_code = request.getParameter("postal_code");
+                municipality = request.getParameter("municipality");
+                state=request.getParameter("state");
+                category=request.getParameter("category");
+
+                Event event1 =new Event();
+                event1.setId(Long.valueOf(id));
+                event1.setName(name);
+                event1.setEvent_date(event_date);
+                event1.setEvent_time(event_time);
+                event1.setDescription(description);
+                event1.setStreet(street);
+                event1.setCologne(cologne);
+                event1.setPostal_code(postal_code);
+                event1.setMunicipality(municipality);
+                event1.setState(state);
+                event1.setCategory(category);
+                try {
+                    // Guardar el objeto "Evento" en la base de datos
+                    if (new DaoEvent().update(event1)) {
+                        // Redirigir con mensaje de éxito
+                        response.sendRedirect("/organ/events?result=true&message=Evento%20guardado%20correctamente");
+                    } else {
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Redirigir con mensaje de error
+                    response.sendRedirect("/organ/main?result=false&message=No%20se%20pudo%20guardar%20el%20evento");
+                }
 
                 break;
 

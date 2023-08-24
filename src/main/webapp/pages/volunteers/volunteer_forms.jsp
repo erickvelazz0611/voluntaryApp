@@ -30,7 +30,7 @@
                 <a href="/volunteer/main" class="text-nowrap logo-img">
                     <!-- Logo parte superior izquierda -->
                     <img src="../../assets/images/logos_voluntariapp/logo_extend.png" style="width:180px"
-                         alt="" /><!-- Logo de la barra lateral -->
+                         alt=""/><!-- Logo de la barra lateral -->
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                     <i class="ti ti-x fs-8"></i>
@@ -83,8 +83,6 @@
         <!-- End Sidebar scroll-->
     </aside>
     <!-- Fin Sidebar navigation-->
-
-
     <!--  Main wrapper -->
     <div class="body-wrapper"> <!-- COLOR == | Fondo Central | ==-->
         <!--  Header Start -->
@@ -101,47 +99,26 @@
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                         <!-- Etiqueta para meter cosas -->
-                        <li class="nav-item d-none d-lg-block">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
-                               data-bs-target="#exampleModal">
-                                <i class="ti ti-search"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-                                <i class="ti ti-bell-ringing"></i>
-                                <div class="notification bg-primary rounded-circle"></div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-icon-hover">
-                                <i class="ti ti-question-mark"></i>
-                            </a>
-                        </li>
+
                         <!-- Foto de perfil -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
+                               data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px" class="rounded-circle">
+                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
+                                     class="rounded-circle">
                             </a>
-
                             <!-- Menu desplegable del la Foto fe perfil -->
-                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
+                                 aria-labelledby="drop2">
                                 <!-- COLOR == | Fondo Desplegable Foto Perfil | ==    (Codigo de arriba)  -->
                                 <div class="message-body">
                                     <a href="/volunteer/porfile" class="d-flex align-items-center gap-2 dropdown-item">
                                         <i class="ti ti-user fs-6"></i>
                                         <p class="mb-0 fs-3">Mi perfil</p>
                                     </a>
-                                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-tools fs-6"></i>
-                                        <p class="mb-0 fs-3">Perzonalizar</p>
-                                    </a>
-                                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-list-check fs-6"></i>
-                                        <p class="mb-0 fs-3">Otros</p>
-                                    </a>
-                                    <a href="/user/login" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
+
+                                    <a href="/api/auth/logout" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
                                         Sesion</a>
                                 </div>
                             </div>
