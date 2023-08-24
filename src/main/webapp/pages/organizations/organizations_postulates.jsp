@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 
@@ -8,12 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VoluntariApp Postulados</title>
     <!-- Se inserta la foto del logo de la empresa -->
-    <link rel="shortcut icon" type="image/png" href="../../assets/images/logos_voluntariapp/logo_VOLUNTARIAPP.png"/>
-    <link rel="stylesheet" href="../../assets/css/styles.min.css"/>
+    <link rel="shortcut icon" type="image/png" href="../../assets/images/logos_voluntariapp/logo_VOLUNTARIAPP.png" />
+    <link rel="stylesheet" href="../../assets/css/styles.min.css" />
     <link rel="stylesheet" href="../../assets/css/css/style_dashboard.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-    <jsp:include page="/layouts/DataTablesCSS.jsp"/>
+    <link rel="stylesheet" href="{pageContext.request.contextPath}https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{pageContext.request.contextPath}https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
 
 <body>
@@ -32,7 +30,7 @@
                 <a href="/organ/main" class="text-nowrap logo-img">
                     <!-- Logo parte superior izquierda -->
                     <img src="../../assets/images/logos_voluntariapp/logo_extend.png" style="width:180px"
-                         alt=""/><!-- Logo de la barra lateral -->
+                         alt="" /><!-- Logo de la barra lateral -->
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                     <i class="ti ti-x fs-8"></i>
@@ -142,16 +140,13 @@
                         </li>
                         <!-- Foto de perfil -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
-                               data-bs-toggle="dropdown"
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
-                                     class="rounded-circle">
+                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"  class="rounded-circle">
                             </a>
 
                             <!-- Menu desplegable del la Foto fe perfil -->
-                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
-                                 aria-labelledby="drop2">
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                                 <!-- COLOR == | Fondo Desplegable Foto Perfil | ==    (Codigo de arriba)  -->
                                 <div class="message-body">
                                     <a href="/organ/porfile" class="d-flex align-items-center gap-2 dropdown-item">
@@ -166,7 +161,7 @@
                                         <i class="ti ti-list-check fs-6"></i>
                                         <p class="mb-0 fs-3">Otros</p>
                                     </a>
-                                    <a href="/api/auth/login" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
+                                    <a href="/user/login" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
                                         Sesion</a>
                                 </div>
                             </div>
@@ -192,126 +187,93 @@
             </div>
             <hr>
 
-            <div class="row mt-2 mb-2">
-                <div class="col">
-                    <label for="opciones">Seleccionar evento</label>
-                    <select name="opciones" id="opciones" class="form-select" onchange="getallForms()">
-                        <option value="">Seleccione...</option>
-                        <c:forEach var="event" items="${postulantes}">
-                            <option value="${event.id}">
-                                <c:out value="${event.name}"/>
-                                <c:out value="${event.event_date}"/>
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
-
             <div class="row">
+                <br>
                 <h4>Nombre del Evento</h4>
-            </div>
-            <br>
-            <!-- Inicia la tabla para los usarios -->
-            <div class="row">
-                <div class="col-lg-12 d-flex align-items-stretch">
-                    <div class="card w-100">
-                        <div class="card-body p-3">
-                            <div class="table-responsive">
-                                <table id="" class="table text-nowrap mb-0 align-middle">
-                                    <thead class="text-dark fs-4">
-
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">No.</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Nombre</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Apellido Paterno</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Apellido Materno</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Fecha de naciemiento</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Direccion</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Telefono</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">CURP</h6>
-                                    </th>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Status</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Activar</h6>
-                                    </th>
-                                    <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Desactivar</h6>
-                                    </th>
-
-                                    </thead>
-                                    <tbody id="postulantesBody">
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Fin Contenedor (Principal) -->
-        </div>
-    </div>
-</div>
-<!-- JS -->
-<jsp:include page="../../layouts/footer.jsp"/>
-<jsp:include page="/layouts/DataTablesJS.jsp"/>
-<script>
-    const getallForms = async () => {
-        const select = document.getElementById("opciones").value;
-        const response = await fetch('http://localhost:8080/postulations?id=' + select);
-        const data = await response.json();
-        const div = document.getElementById('postulantesBody');
-        div.innerHTML = '';
-        let content = ``;
-        data?.map((posts) => {
-            content += `                                        <tr>
-
-
+                <br>
+                <!-- Inicia la tabla para los usarios -->
+                <div class="row">
+                    <div class="col-lg- d-flex align-items-stretch">
+                        <div class="card w-100">
+                            <div class="card-body p-3">
+                                <div class="table-responsive">
+                                    <table class="table text-nowrap mb-0 align-middle">
+                                        <!--  -->
+                                        <thead class="text-dark fs-4">
+                                        <tr>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Foto</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Nombre</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Apellido Paterno</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Apellido Materno</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Cumpleaños</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Curp</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Direccion</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Telefono</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">RFC</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Email</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Status</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Editar</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Eliminar</h6>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
                                             <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">` + posts.id_post +  ` </h6>
+                                                <h6 class="fw-semibold mb-0"> </h6>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">` + posts.volunteer.name  + `  </h6>
+                                                <h6 class="fw-semibold mb-0"> </h6>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">` + posts.volunteer.surname +`</h6>
+                                                <h6 class="fw-semibold mb-0"> </h6>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">` + posts.volunteer.lastanme + `  </h6>
+                                                <h6 class="fw-semibold mb-0"> </h6>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0"> ` + posts.volunteer.birthday + ` </h6>
+                                                <h6 class="fw-semibold mb-0"> </h6>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0"> ` + posts.volunteer.address + ` </h6>
+                                                <h6 class="fw-semibold mb-1"> </h6>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-1"> ` + posts.volunteer.phone + ` </h6>
+                                                <p class="mb-0 fw-normal"> </p>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">` + posts.volunteer.curp + `</p>
+                                                <p class="mb-0 fw-normal"> </p>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">` + posts.Is_Accept + ` </p>
+                                                <p class="mb-0 fw-normal"> </p>
                                             </td>
-
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0"> </h6>
+                                            </td>
                                             <td class="border-bottom-0">
                                                 <div class="d-flex align-items-center gap-2">
                                                             <span
@@ -327,28 +289,139 @@
                                             <td class="border-bottom-0">
                                                 <h6 class="fw-semibold mb-0 fs-4"> </h6>
                                             </td>
-                                        </tr>`;
-        });
-        div.innerHTML = content;
-    }
-    window.addEventListener("DOMContentLoaded", () => {
-        if (!${param['result']==false?param['result']:true}) {
-            Swal.fire({
-                title: 'Accion realizada correctamente...',
-                text: '${param['message']}',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-        if (${param['result']==true?param['result']:false}) {
-            Swal.fire({
-                title: 'Error ¡Intenta de  nuevo!...',
-                text: '${param['message']}',
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-    }, false);
-</script>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <br>
+                    <h4>Nombre del Evento</h4>
+                    <br>
+                </div>
+                <!-- Inicia la tabla para los usarios -->
+                <div class="row">
+                    <div class="col-lg- d-flex align-items-stretch">
+                        <div class="card w-100">
+                            <div class="card-body p-3">
+                                <div class="table-responsive">
+                                    <table class="table text-nowrap mb-0 align-middle">
+                                        <!--  -->
+                                        <thead class="text-dark fs-4">
+                                        <tr>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Foto</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Nombre</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Apellido Paterno</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Apellido Materno</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Cumpleaños</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Curp</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Direccion</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Telefono</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">RFC</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Email</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Status</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Editar</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Eliminar</h6>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0"> </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0"> </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0"> </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0"> </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0"> </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-1"> </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal"> </p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal"> </p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal"> </p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0"> </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <div class="d-flex align-items-center gap-2">
+                                                            <span
+                                                                    class="badge bg-danger rounded-3 fw-semibold">Inactivo</span>
+                                                </div>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal"> </p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal"> </p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0 fs-4"> </h6>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin Contenedor (Principal) -->
+
+        </div>
+    </div>
+</div>
+<!-- JS -->
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/bootstrap.bundle.min.js"></script>
+<script src="../../assets/js/sidebarmenu.js"></script>
+<script src="../../assets/js/app.min.js"></script>
+<!-- Estadisticas Library -->
+<script src="../../assets/js/apexcharts.min.js"></script>
+<script src="../../assets/js/dashboard.js"></script>
 </body>
 </html>

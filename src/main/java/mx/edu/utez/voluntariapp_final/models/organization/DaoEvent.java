@@ -147,7 +147,7 @@ public class DaoEvent {
     public boolean save(Event event) {
         try {
             conn = new MYSQLConnection().connect();
-            String query = "CALL  CreateEvent(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?,?);";
+            String query = "CALL  CreateEvent(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?);";
             cs = conn.prepareCall(query);
             cs.setString(1, event.getName());
             cs.setString(2, event.getEvent_date());
@@ -161,11 +161,6 @@ public class DaoEvent {
             cs.setString(10,event.getCategory());
             cs.setLong(11,event.getUser().getId_user());
             cs.setLong(12,event.getOrgan().getId());
- 
-            cs.setBoolean(13, event.getStatus());
-
-
-
             cs.setBoolean(13, event.isEnable());
 
             System.out.println(event.getOrgan().getId()+" Daooooo");
@@ -233,37 +228,39 @@ public class DaoEvent {
         return events1;
     }*/
     //Listado de Relacion de los eventos y organizacion
-    public List<Event> relacion_Organ(int orgId) {
+    public List<Event> relacion_Organ() {
         List<Event> events2 = new ArrayList<>();
-        System.out.println(orgId);
-        System.out.println("ahah");
+        System.out.println(events2);
         try  {
             conn = new MYSQLConnection().connect(); //Establecer la conexion
-            String query = "CALL VerOrganizationEvents(?)"; //Preparamos la sentencia
-            cs = conn.prepareCall(query);
-            /// cs.setLong(1,orgId);//Ejecutamos la sentencia en la base de datos
-            cs.setLong(1,orgId);
-            rs = cs.executeQuery();
+            String query = "select*from relacion_event_orga;"; //Preparamos la sentencia
+            pstm = conn.prepareStatement(query);   //Ejecutamos la sentencia en la base de datos
+            rs = pstm.executeQuery();
+
             while (rs.next()) {
                 Organ organ =new Organ();
-                Event event =new Event();
+                organ.setId(rs.getLong("org_id"));
+                organ.setBussines_name(rs.getString("bussines_name"));
+                Event event = new Event();
                 event.setId(rs.getLong("event_id"));
                 event.setName(rs.getString("event_name"));
                 event.setEvent_date(rs.getString("event_date"));
-                event.setDescription(rs.getString("description"));
-                event.setStreet(rs.getString("street"));
-                event.setCologne(rs.getString("cologne"));
-                event.setState(rs.getString("state"));
-                event.setPostal_code(rs.getString("postal_code"));
-                event.setMunicipality(rs.getString("municypaly"));
                 event.setEvent_time(rs.getString("event_time"));
+                event.setDescription(rs.getString("description"));
+                event.setStreet(rs.getString("event_street"));
+                event.setCologne(rs.getString("event_cologne"));
+                event.setPostal_code(rs.getString("event_postal_code"));
+                event.setMunicipality(rs.getString("event_municipality"));
+                event.setState(rs.getString("event_state"));
+                event.setUser_id(rs.getString("event_user_id"));
+                event.setOrganization_id(rs.getString("organization_id"));
                 event.setCategory(rs.getString("category"));
-                event.setOrgan(organ);
-
+                User user = new User();
+                event.setUser(user);
+               event.setOrgan(organ);
                 events2.add(event);
-
             }
-
+            System.out.println("Que pedo si llegas aqui?");
         } catch (SQLException e) {
             Logger.getLogger(DaoEvent.class.getName())
                     .log(Level.SEVERE, "Error  del Listado"
@@ -275,69 +272,6 @@ public class DaoEvent {
         return events2;
     }
 
-    //Update de evento
-
-    public boolean update (Event event) {
-        try {
-            conn = new MYSQLConnection().connect();
-            String query = "CALL  UpdateEvent(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, );";
-            cs = conn.prepareCall(query);
-            cs.setString(1, event.getName());
-            cs.setString(2, event.getEvent_date());
-            cs.setString(3, event.getEvent_time());
-            cs.setString(4, event.getDescription());
-            cs.setString(5, event.getStreet());
-            cs.setString(6, event.getCologne());
-            cs.setString(7, event.getPostal_code());
-            cs.setString(8, event.getMunicipality());
-            cs.setString(9, event.getState());
-            cs.setString(10,event.getCategory());
-            cs.setLong(11,event.getUser().getId_user());
-            cs .executeQuery();
-
-            return true;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            Logger.getLogger(DaoEvent.class.getName()).log(Level.SEVERE, "Error del save " + e.getMessage());
-        } finally {
-            close();
-        }
-        return false;
-    }
-//Segun chat este metodo sera para hacer la
-// busqueda del id del
-// evento para poder hacer el update
-   /*public  Event getById(String eventId){
-        Event event = null;
-        String query = "SELECT * FROM events WHERE id = ?";
-        try {
-            conn = new MYSQLConnection().connect(); // Asumo que así obtienes la conexión, basado en tu código previo.
-            pstm = conn.prepareStatement(query);
-            pstm.setInt(1, Integer.parseInt(eventId));
-            rs = pstm.executeQuery();
-            if (rs.next()) {
-                event = new Event();
-                event.setId(rs.getLong("id"));
-                event.setName(rs.getString("name"));
-                event.setEvent_date(rs.getString("event_date"));
-                event.setEvent_time(rs.getString("event_time"));
-                event.setDescription(rs.getString("description"));
-                event.setStreet(rs.getString("street"));
-                event.setCologne(rs.getString("cologne"));
-                event.setPostal_code(rs.getString("postal_code"));
-                event.setMunicipality(rs.getString("municipality"));
-                event.setState(rs.getString("state"));
-                event.setCategory(rs.getString("category"));
-                // Aquí puedes continuar con los demás campos...
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Aquí puedes manejar la excepción como prefieras.
-        } finally {
-            close(); // Asumo que tienes un método close que cierra la conexión, el PreparedStatement y el ResultSet.
-        }
-        return event;
-    }*/
 
 
 
@@ -351,6 +285,4 @@ public class DaoEvent {
             e.printStackTrace();
         }
     }
-
-
 }

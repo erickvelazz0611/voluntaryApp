@@ -79,6 +79,8 @@
                             <span class="hide-menu">Perfil</span>
                         </a>
                     </li>
+
+
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
@@ -102,7 +104,23 @@
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                         <!-- Etiqueta para meter cosas -->
-
+                        <li class="nav-item d-none d-lg-block">
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
+                               data-bs-target="#exampleModal">
+                                <i class="ti ti-search"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                                <i class="ti ti-bell-ringing"></i>
+                                <div class="notification bg-primary rounded-circle"></div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-icon-hover">
+                                <i class="ti ti-question-mark"></i>
+                            </a>
+                        </li>
                         <!-- Foto de perfil -->
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
@@ -121,7 +139,7 @@
                                         <p class="mb-0 fs-3">Mi perfil</p>
                                     </a>
 
-                                    <a href="/api/auth/logout" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
+                                    <a href="/user/login" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
                                         Sesion</a>
                                 </div>
                             </div>
@@ -143,25 +161,23 @@
                 <br>
 
 
-                <h4>Te explico brevemente qué puedes hacer con nosotros y quienes somo....</h4>
+                <h4>Te explico brevemente que puedes hacer con nosotros y quienes somo....</h4>
                 <br>
                 <br>
-                <p class="text-break">Somos una aplicación que te brindrá el apoyo para que puedas ver eventos y
+                <p class = "text-break">Somos una aplicación que te brindrá el apoyo para que puedas ver eventos y
                     postularte a aquellos que te parezcan interesantes o esten cerca de ti<br>
+
 
 
                     Esta aplicación está pensada para darte la oprtunidad de contribuir en eventos de CARIDAD
                     O BENEFICOS.<br><br>
-                    Las Organizaciones que tengamos en la App, creaaran sus eventos, en donde tu podras verlos resumidos,
-                    te postularas
+                    Las Organizaciones que tengamos en la App, creaaran sus eventos,en donde tu podras verlos resumidos, te postularas
                     y esperarás a que la Organización acepte que estes dentro.
                     <br>
                     <br>
 
-                    Usted como Voluntario tiene la libertad de poder postularse a los evetos que desee, tenemos nuestro
-                    apartado de eventos
-                    donde podra mirarlos, también mencionar que habrá eventos donde deba responder una encuesta, eso lo
-                    decidirá la
+                    Usted como Voluntario tiene la libertad de poder postularse a los evetos que desee, tenemos nuestro apartado de eventos
+                    donde podra mirarlos,también mencionar que habrá eventos donde deba responder una encuesta,eso lo decidirá la
                     organización.<br>
                     <br>
                     <br>
@@ -169,7 +185,7 @@
                 <br>
                 <br>
 
-                Cuando te postules al evento deseado, te redirigira a tú en cuenta que debes responder.
+                Cuando te postules al evento deseado, te redirigira a tu encuenta que debes responder.
                 La organización rrevisará tus respuestas y así decidirá si serás aceptado o lamentablemente No.
                 Esto sin duda es para garantizar la seguridad del evento.
                 <br>

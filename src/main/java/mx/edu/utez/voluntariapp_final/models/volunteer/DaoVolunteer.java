@@ -196,8 +196,6 @@ public class DaoVolunteer {
                 byte[] imageBytes = rs.getBytes("photo");
                 volunteer.setImageUser(imageBytes);
                 volunteer.setUser_id(rs.getString("user_id"));
-                byte[] imageBytes = rs.getBytes("photo");
-                volunteer.setImageVol(imageBytes);
                 User user = new User();
                 volunteer.setUser(user);
                 Role role = new Role();
@@ -242,47 +240,18 @@ public class DaoVolunteer {
     }
 
     public boolean update(Volunteer volunteer) {
- Fer
-        System.out.println("Bienvenido a la actualizacion");
-        try {
-            conn = new MYSQLConnection().connect();
-            String query = "{CALL actualizar_voluntario(?, ?, ?, ?, ?,?)}";
-
         System.out.println("Bienvenido al mundo del sida");
         try {
             conn = new MYSQLConnection().connect();
             String query = "{CALL actualizar_voluntario(?, ?, ?, ?, ?, ?)}";
- main
             cs= conn.prepareCall(query);
             cs.setLong(1, volunteer.getId());
             cs.setString(2, volunteer.getAddress());
             cs.setString(3, volunteer.getPhone());
             cs.setString(4, volunteer.getUser().getEmail());
             cs.setString(5, volunteer.getUser().getPassword());
- Fer
-            cs.setBytes(6, volunteer.getImageVol());
-            boolean updated = cs.executeUpdate() > 0;
-            if (updated) {
-                System.out.println("Actualización realizada con éxito.");
-            } else {
-                System.out.println("La actualización no se completó.");
-            }
-            return updated;
-
-           /*System.out.println("I: " + volunteer.getId());
-            System.out.println("Name: " + volunteer.getName());
-            System.out.println("Email: " + volunteer.getUser().getEmail());
-            ///System.out.println("Password: " + admin.getUser().getPassword());
-            if (volunteer.getImageVol() != null) {
-                System.out.println("Tamaño de la imagen: " + volunteer.getImageVol().length + " bytes.");
-            } else {
-                System.out.println("Imagen no disponible.");
-            }*/
-
-
             cs.setBytes(6, volunteer.getImageUser());
             return cs.executeUpdate() > 0;
- main
 
         } catch (Exception e) {
             Logger.getLogger(DaoVolunteer.class.getName())
@@ -292,47 +261,6 @@ public class DaoVolunteer {
         }
         return false;
     }
-
- Fer
-    public boolean deleteByUserId(int userId) {
-        boolean result = false;
-        CallableStatement cstmt = null;
-
-        try {
-            String callProcedure = "{CALL DeleteVolunteerByUserId(?)}";
-            cstmt = conn.prepareCall(callProcedure);
-
-            cstmt.setInt(1, userId); // Establecer el user_id como parámetro de entrada
-
-            int numRows = cstmt.executeUpdate();
-            if (numRows > 0) {
-                result = true;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (cstmt != null) {
-                    cstmt.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return result;
-
-    }
-    /*System.out.println("ID Admin: " + admin.getId_admin());
-    System.out.println("Name: " + admin.getName());
-    System.out.println("Email: " + admin.getUser().getEmail());
-    System.out.println("Password: " + admin.getUser().getPassword());
-    if (admin.getImageUser() != null) {
-        System.out.println("Tamaño de la imagen: " + admin.getImageUser().length + " bytes.");
-    } else {
-        System.out.println("Imagen no disponible.");
-    }*/
 
     public boolean delete(Long id, String Id) {
         try {
@@ -349,7 +277,6 @@ public class DaoVolunteer {
         }
         return false;
     }
- main
 
     public void close(){
         try{
