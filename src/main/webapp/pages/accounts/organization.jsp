@@ -39,8 +39,7 @@
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="form-floating">
-                                <input name="rfc" type="text" id="rfc" class="form-control" placeholder="RFC"
-                                       pattern=".{13}" required>
+                                <input name="rfc" type="text" id="rfc" class="form-control" placeholder="RFC" required>
                                 <label for="rfc">RFC</label>
                             </div>
                         </div>
@@ -68,7 +67,7 @@
                             <div class="form-floating">
                                 <input name="postal_code" type="text" id="postal_code" class="form-control"
                                        placeholder="Código Postal"
-                                       pattern="[0-9]{5}" required>
+                                       pattern="[0-9]+" required>
                                 <label for="postal_code">Código Postal</label>
                             </div>
                         </div>
@@ -107,7 +106,7 @@
                         <div class="col-md-0 mb-4">
                             <div class="form-floating form-control-icon">
                                 <input type="password" id="password" name="password" class="form-control"
-                                       placeholder="Contraseña" pattern=".{12,}" title="La contraseña debe tener al menos 12 caracteres"
+                                       placeholder="Contraseña"
                                        required>
                                 <label for="password">Contraseña</label>
                                 <div class="password-toggle" onclick="togglePasswordVisibility('password')">

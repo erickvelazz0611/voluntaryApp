@@ -1,14 +1,21 @@
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!doctype html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VoluntariApp Eventos</title>
-    <jsp:include page="/layouts/head.jsp"/>
     <!-- Se inserta la foto del logo de la empresa -->
-    <jsp:include page="/layouts/DataTablesCSS.jsp"/>
+    <link rel="shortcut icon" type="image/png" href="../../assets/images/logos_voluntariapp/logo_VOLUNTARIAPP.png"/>
+    <link rel="stylesheet" href="../../assets/css/styles.min.css"/>
+    <link rel="stylesheet" href="../../assets/css/css/style_dashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="../../assets/css/css/sweetalert2.min.css">
 </head>
 
 <body>
@@ -106,7 +113,71 @@
     <div class="body-wrapper"> <!-- COLOR == | Fondo Central | ==-->
         <!--  Header Start -->
         <header class="app-header"> <!-- COLOR == | Barra Navegacion Superior | ==-->
-            <jsp:include page="/layouts/navbar.jsp"/>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <ul class="navbar-nav">
+                    <li class="nav-item d-block d-xl-none">
+                        <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                            <i class="ti ti-menu-2"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Nav parte superior de iconos -->
+                <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+                    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+                        <!-- Etiqueta para meter cosas -->
+                        <li class="nav-item d-none d-lg-block">
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
+                               data-bs-target="#exampleModal">
+                                <i class="ti ti-search"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                                <i class="ti ti-bell-ringing"></i>
+                                <div class="notification bg-primary rounded-circle"></div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-icon-hover">
+                                <i class="ti ti-question-mark"></i>
+                            </a>
+                        </li>
+                        <!-- Foto de perfil -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
+                                     class="rounded-circle">
+                            </a>
+
+                            <!-- Menu desplegable del la Foto fe perfil -->
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
+                                 aria-labelledby="drop2">
+                                <!-- COLOR == | Fondo Desplegable Foto Perfil | ==    (Codigo de arriba)  -->
+                                <div class="message-body">
+                                    <a href="/organ/porfile" class="d-flex align-items-center gap-2 dropdown-item">
+                                        <i class="ti ti-user fs-6"></i>
+                                        <p class="mb-0 fs-3">Mi perfil</p>
+                                    </a>
+                                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                                        <i class="ti ti-tools fs-6"></i>
+                                        <p class="mb-0 fs-3">Perzonalizar</p>
+                                    </a>
+                                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                                        <i class="ti ti-list-check fs-6"></i>
+                                        <p class="mb-0 fs-3">Otros</p>
+                                    </a>
+                                    <a href="/user/login" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
+                                        Sesion</a>
+                                </div>
+                            </div>
+                            <!-- Fin del Menu desplegable del la Foto fe perfil -->
+                        </li>
+                        <!-- Fin Foto de perfil -->
+                    </ul>
+                </div>
+            </nav>
         </header>
         <!--  Header End -->
         <!-- Inicio Contenedor (Principal) -->
@@ -123,21 +194,22 @@
                 </div>
             </div>
             <hr>
-            <div class="form-floating">
-                <input type="hidden" id="organ_id" name="organ_id" value="<%= session.getAttribute("organId")%>"
-                       class="form-control">
-            </div>
             <!-- Fin Contenedor (Central) -->
 
             <!-- Inicia la tabla para los eventos -->
             <div class="row">
-                <div class="col-lg-12 d-flex align-items-stretch">
+                <!-- Aqui inicia el codigo 242 -->
+                <div class="col-lg- d-flex align-items-stretch">
                     <div class="card w-100">
                         <div class="card-body p-3">
                             <div class="table-responsive">
-                                <table id="example" class="table text-nowrap mb-0 align-middle">
+                                <table class="table text-nowrap mb-0 align-middle">
+                                    <!--  -->
                                     <thead class="text-dark fs-4">
                                     <tr>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Foto</h6>
+                                        </th>
                                         <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Nombre del evento</h6>
                                         </th>
@@ -151,9 +223,23 @@
                                             <h6 class="fw-semibold mb-0">Hora del evento</h6>
                                         </th>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Categoria</h6>
+                                            <h6 class="fw-semibold mb-0">Estado</h6>
                                         </th>
-
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Calle</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Colonia</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Tipo de evento</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Editar</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Eliminar</h6>
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -186,37 +272,51 @@
                                             </td>
                                             <td class="border-bottom-0">
                                                 <p class="mb-0 fw-normal">
+                                                    <c:out value="${eventito.state}"/>
+                                                </p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">
+                                                    <c:out value="${eventito.municipality}"/>
+                                                </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">
+                                                    <c:out value="${eventito.postal_code}"/>
+                                                </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">
+                                                    <c:out value="${eventito.street}"/>
+                                                </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">
+                                                    <c:out value="${eventito.cologne}"/>
+                                                </h6>
+                                            </td>
+                                        <%--                     Aqui esta el STATUS                       --%>
+                                        <%-- <td class="border-bottom-0">--%>
+                                        <%--   <div class="d-flex align-items-center gap-2">--%>
+                                        <%--    <span--%>
+                                        <%--        class="badge bg-danger rounded-3 fw-semibold"> <c:out value="${orga.user.status}"/>--%>
+                                        <%--    </span>--%>
+                                        <%--   </div>--%>
+                                        <%-- </td>--%>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal">
                                                     <c:out value="${eventito.category}"/>
                                                 </p>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <div class="col">
-                                                    <button type="button" class="btn btn-warning"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal"
-                                                            onclick="editEvent(${eventito.id})"
-                                                            id="editEvent${eventito.id}"
-                                                            data-id="${eventito.id}"
-                                                            data-name="${eventito.name}"
-                                                            data-event_date="${eventito.event_date}"
-                                                            data-event_time="${eventito.event_time}"
-                                                            data-description="${eventito.description}"
-                                                            data-street="${eventito.street}"
-                                                            data-cologne="${eventito.cologne}"
-                                                            data-postal_code="${eventito.postal_code}"
-                                                            data-state="${eventito.state}"
-                                                    >
+                                                <p class="mb-0 fw-normal">
 
-
-                                                        Editar
-                                                    </button>
-                                                </div>
+                                                </p>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <form method="post" action="">
-                                                    <input hidden value="${organ.user.id_user}" name="id"/>
-                                                    <button type="button" class="btn btn-danger">Eliminar</button>
-                                                </form>
+                                                <p class="mb-0 fw-normal">
+
+                                                </p>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -226,141 +326,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row pt-8">
-                <div class="modal fade" id="exampleModal" tabindex="-1"
-                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Actualización del Evento
-                                </h5>
-                                <button type="button" class="btn-close"
-                                        data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-
-
-                            <div class="modal-body">
-                                <form class="needs-validation" id="organ-form" novalidate
-                                      action="/event/update" method="post">
-                                    <%--<input hidden value="${events2.id}" name="id">--%>
-                                    <div class="row ">
-                                        <!-- Muestra elid del organizacion-->
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating">
-                                                <input type="text" name="id" id="id"
-                                                       class="form-control"
-                                                       required>
-                                                <label for="id">Numero de Evento</label>
-                                            </div>
-                                        </div><div class="col-md-6 mb-4">
-                                        <div class="form-floating">
-                                            <input type="text" name="name" id="name"
-                                                   class="form-control"
-                                                   required>
-                                            <label for="name">Nombre del Evento </label>
-                                        </div>
-                                    </div>
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating">
-                                                <input type="date" name="event_date"
-                                                       id="event_date" class="form-control"
-                                                       required>
-                                                <label for="name">Fecha del Evento  </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating">
-                                                <input type="time" name="event_time"
-                                                       id="event_time" class="form-control" required>
-                                                <label for="event_time">Hora del Evento  </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating">
-                                                <input type="text" name="description"
-                                                       id="description"
-
-                                                       class="form-control"
-                                                       placeholder="description"
-                                                       required>
-                                                <label for="event_time">Descripcion del Evento</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating">
-                                                <input type="text" name="municypaly"
-                                                       id="municypaly"
-                                                       value=""
-                                                       class="form-control"
-                                                       placeholder="municypaly"
-                                                       required>
-                                                <label for="municypaly">Municipio</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating">
-                                                <input type="text" name="postal_code"
-                                                       id="postal_code"
-                                                       value=""
-                                                       pattern="[0-9]{5}"
-                                                       class="form-control"
-                                                       required>
-                                                <label for="postal_code">Código postal</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating">
-                                                <input type="text" name="cologne" id="cologne"
-                                                       class="form-control"
-                                                       placeholder="cologne"
-                                                       value="" required>
-                                                <label for="cologne">Colonia</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating">
-                                                <input type="text" name="street" id="street"
-                                                       class="form-control"
-                                                       value=""
-                                                       placeholder="street"
-                                                       required>
-                                                <label for="street">Calle</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating">
-                                                <input type="text" name="state" id="state"
-                                                       value=""
-                                                       class="form-control" required>
-                                                <label for="state">Estado</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger btn-sm"
-                                                data-bs-dismiss="modal" aria-label="Close">
-                                            Cancelar
-                                        </button>
-                                        <button type="button" class="btn btn-warning btn-sm"
-                                                onclick="mostrarConfirmacion()">
-                                            Actualizar
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--  ===============       Fin del Modal de Actualizar      ===============  -->
             </div>
         </div>
 
@@ -382,9 +347,15 @@
 </div>
 </div>
 <!-- JS -->
-<jsp:include page="/layouts/footer.jsp"/>
-<jsp:include page="/layouts/DataTablesJS.jsp"/>
-
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/bootstrap.bundle.min.js"></script>
+<script src="../../assets/js/sidebarmenu.js"></script>
+<script src="../../assets/js/app.min.js"></script>
+<!-- Estadisticas Library -->
+<script src="../../assets/js/apexcharts.min.js"></script>
+<script src="../../assets/js/dashboard.js"></script>
+<script src="../../assets/js/sweetalert2.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script>
     (function () {
         'use strict'
@@ -450,40 +421,8 @@
             }
         });
     }
-
-    /*Conseguir el id del evento mediante Java script */
-
-    // Función para extraer el ID del modal
-
-    // Para probar la función, puedes invocarla y mostrar el resultado en la consola:
-
-
-    //Editacion de un evento
-    const editEvent = (id) => {
-        const btn = document.getElementById("editEvent" + id)
-        const idEvent = btn.dataset.id;
-        const nameEvent = btn.dataset.name;
-        const eventDate=btn.dataset.event_date
-        const  eventTime =btn.dataset.event_time;
-        const descripcionEvent=btn.dataset.description;
-        const streetEvent =btn.dataset.street;
-        const cologneEvent=btn.dataset.cologne;
-        const postal_codeEvent= btn.dataset.postal_code;
-        // const municypalyEvent=btn.dataset.municypaly;
-        const stateEvent=btn.dataset.state;
-
-        document.getElementById("id").value = idEvent;
-        document.getElementById("name").value = nameEvent;
-        document.getElementById("event_date").value=eventDate;
-        document.getElementById("event_time").value=eventTime;
-        document.getElementById("description").value= descripcionEvent;
-        document.getElementById("street").value=streetEvent;
-        document.getElementById("cologne").value=cologneEvent;
-        document.getElementById("postal_code").value=postal_codeEvent;
-        // document.getElementById("municypaly").value=municypalyEvent;
-        document.getElementById("state").value=stateEvent;
-    }
 </script>
+
 </body>
 
 </html>

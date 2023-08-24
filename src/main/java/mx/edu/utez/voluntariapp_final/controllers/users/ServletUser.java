@@ -11,8 +11,6 @@ import mx.edu.utez.voluntariapp_final.models.Role.Role;
 import mx.edu.utez.voluntariapp_final.models.administrators.Admin;
 
 import mx.edu.utez.voluntariapp_final.models.organization.DaoOrgan;
-import mx.edu.utez.voluntariapp_final.models.organization.Event;
-import mx.edu.utez.voluntariapp_final.models.organization.Forms;
 import mx.edu.utez.voluntariapp_final.models.organization.Organ;
 import mx.edu.utez.voluntariapp_final.models.user.DaoUser;
 import mx.edu.utez.voluntariapp_final.models.user.User;
@@ -27,8 +25,8 @@ import java.sql.SQLException;
 
 
 @WebServlet(name = "users",urlPatterns = {
-        "/api/auth/logout",//Cierre en general
-        "/api/auth/login",//Redireccion al inicio de sesion
+        "/user/login",
+        "/user/main",
         "/user/main-admin",
         "/user/main-organ",
         "/user/main-volun",
@@ -49,10 +47,7 @@ import java.sql.SQLException;
         "/user/save-view",
         "/user/user-view-update",
         "/user/update",
-        "/user/delete",
-        "/user/main"
-
-
+        "/user/delete"
 })
 
 public class ServletUser extends HttpServlet {
@@ -64,8 +59,8 @@ public class ServletUser extends HttpServlet {
     private String id_role;
     private String email,password;
     private Organ organ;
-
-
+    private Volunteer volunteer;
+    private  Admin admin;
 
 
 
@@ -103,20 +98,16 @@ public class ServletUser extends HttpServlet {
             case "/user/save-view":
                 redirect = "/pages/create_administrator_account.jsp";
                 break;
-            case "/api/auth/login":
-                redirect = "/index.jsp";
-                break;
-
-            case "/api/auth/logout":
-                session = req.getSession();
-                session.invalidate();
+            case "/user/login":
                 redirect = "/index.jsp";
                 break;
             case "/user/role": //redirigir al inicio
                 redirect = "/pages/register_login.jsp";
                 break;
-//
-
+            case "/user/role-save-admin": //redirigir al inicio
+                req.setAttribute("roles",new DaoUser().searchRole());
+                redirect = "/pages/create_administrator_account.jsp";
+                break;
         }
         req.getRequestDispatcher(redirect).forward(req, resp);
     }
@@ -151,7 +142,6 @@ public class ServletUser extends HttpServlet {
                                 System.out.println(user.getId_user()+ " id de use");
                                 session.setAttribute("userId", user.getId_user());
                                 session.setAttribute("organId", +organ.getId());
-
                                 redirect = "/organ/main";
                                 break;
                             case "VOLUNTEER":
@@ -162,7 +152,7 @@ public class ServletUser extends HttpServlet {
                         throw new Exception("Credentials mismatch");
                     }
                 } catch (Exception e) {
-                    redirect = "/api/auth/login?result=false&message=" + URLEncoder
+                    redirect = "/user/login?result=false&message=" + URLEncoder
                             .encode("Email y/o contraseña incorrecta",
                                     StandardCharsets.UTF_8);
                 }

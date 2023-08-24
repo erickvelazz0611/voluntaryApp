@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
+    <!-- Se inserta la foto del logo de la empresa -->
     <link rel="shortcut icon" type="image/png"
           href="${pageContext.request.contextPath}/assets/images/logos_voluntariapp/logo_VOLUNTARIAPP.png"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.min.css"/>
@@ -87,6 +88,8 @@
         <!-- End Sidebar scroll-->
     </aside>
     <!-- Fin Sidebar navigation-->
+
+
     <!--  Main wrapper -->
     <div class="body-wrapper"> <!-- COLOR == | Fondo Central | ==-->
         <!--  Header Start -->
@@ -103,7 +106,23 @@
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                         <!-- Etiqueta para meter cosas -->
-
+                        <li class="nav-item d-none d-lg-block">
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
+                               data-bs-target="#exampleModal">
+                                <i class="ti ti-search"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                                <i class="ti ti-bell-ringing"></i>
+                                <div class="notification bg-primary rounded-circle"></div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-icon-hover">
+                                <i class="ti ti-question-mark"></i>
+                            </a>
+                        </li>
                         <!-- Foto de perfil -->
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
@@ -112,11 +131,8 @@
                                 <img src="data:image/jpeg;base64, ${base64Image}" alt="" style="width:35px; height:35px"
                                      class="rounded-circle">
                             </a>
- Fer
-
                             <!-- -->
 
- main
                             <!-- Menu desplegable del la Foto fe perfil -->
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
                                  aria-labelledby="drop2">
@@ -127,7 +143,7 @@
                                         <p class="mb-0 fs-3">Mi perfil</p>
                                     </a>
 
-                                    <a href="/api/auth/logout" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
+                                    <a href="/user/login" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
                                         Sesion</a>
                                 </div>
                             </div>
@@ -143,15 +159,17 @@
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-md-12">
-                    <div class="d-flex align-items-center gap-2 dropdown-item">
-                        <i class="ti ti-user-circle fs-6"></i>
-                        <p class="mb-0 fs-3">Perfil</p>
-                        <br><br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex align-items-center gap-2 dropdown-item">
+                            <i class="ti ti-user-circle fs-6"></i>
+                            <p class="mb-0 fs-3">Perfil</p>
+                            <br><br>
+                        </div>
                     </div>
                 </div>
+                <hr>
             </div>
-            <hr>
 
             <div class="row d-flex justify-content-center align-items-center w-100 h-100">
                 <div class="col col-lg-0 mb-4 mb-lg-0">
@@ -218,8 +236,13 @@
                                                 <c:out value="${user.email}"/>
                                             </div>
                                         </div>
+                                        <div class="col-6 mb-3">
+                                            <div class="form-floating">
+                                                <h5>Contraseña</h5>
+                                                <c:out value="${user.password}"/>
+                                            </div>
+                                        </div>
                                     </div>
-
                                     <!--=============== Inicio de los botones del Modal de Actualizar ===============-->
                                     <div class="row  pt-1 justify-content-center">
                                         <button type="button" class="btn btn-warning col-lg-6" data-bs-toggle="modal"
@@ -247,14 +270,8 @@
                                                     </div>
 
                                                     <div class="modal-body">
- Fer
-                                                        <form class="needs-validation" id="volunteer-form" novalidate
-                                                              action="/volunteer/update" method="post"
-                                                              enctype="multipart/form-data">
-
                                                         <form  class="needs-validation" id="volunteer-form" novalidate
                                                               action="/volunteer/update" method="post" enctype="multipart/form-data">
- main
                                                             <input hidden value="${volunteer.id}" name="id">
 
                                                             <div class="row ">
@@ -349,31 +366,18 @@
                                                                         <label for="email">Email</label>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-0 mb-4">
-                                                                        <div class="form-floating form-control-icon">
-                                                                            <input name="password" type="password"
-                                                                                   id="password"
-                                                                                   value="${user.password}"
-                                                                                   class="form-control"
-                                                                                   placeholder="Contraseña" required/>
-                                                                            <span class="password-toggle"
-                                                                                  onclick="togglePasswordVisibility('password')">
+                                                                <div class="col-md-0 mb-4">
+                                                                    <div class="form-floating form-control-icon">
+                                                                        <input name="password" type="password"
+                                                                               id="password" value="${user.password}"
+                                                                               class="form-control"
+                                                                               placeholder="Contraseña" required/>
+                                                                        <span class="password-toggle"
+                                                                              onclick="togglePasswordVisibility('password')">
                                                                             <i id="password-toggle-icon"
                                                                                class="bi bi-eye-slash"></i>
                                                                         </span>
-                                                                            <label for="password">Contraseña</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-0 mb-4">
-                                                                        <div class="form-floating form-control-icon">
-                                                                            <input name="profilePic" type="file"
-                                                                                   id="profilePicupload"
-                                                                                   class="form-control"/>
-                                                                            <label for=profilePicupload>Cambiar
-                                                                                foto</label>
-                                                                        </div>
+                                                                        <label for="password">Contraseña</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -503,7 +507,7 @@
         xhr.send(new URLSearchParams(new FormData(document.getElementById("volunteer-form"))));
     }
 
-    // Función para mostrar la alerta de SweetAlert y redireccionar después del tiempo de
+    // Función para mostrar la alerta de SweetAlert y redireccionar después del tiempo de auto-cierre
     function mostrarAlerta(mensaje, tipo, redireccionar) {
         Swal.fire({
             title: mensaje,
@@ -514,7 +518,7 @@
             showConfirmButton: false, // No muestra el botón de confirmación en la alerta
         }).then(() => {
             if (redireccionar) {
-                window.location.href = "/user/login"; // Cambia la URL por la página a la que deseas redireccionar después del tiempo de
+                window.location.href = "/user/login"; // Cambia la URL por la página a la que deseas redireccionar después del tiempo de auto-cierre.
             }
         });
     }
