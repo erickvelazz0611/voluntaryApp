@@ -5,6 +5,10 @@
     justify-content: center;
 }
 
+.container-gray {
+    border: 10px solid #000000;
+}
+
 .colorcito_azulito-fondo{
     background-color: #1796FF;
     color: white;
@@ -22,6 +26,10 @@
 
 .container {
     border: 3px solid #1796FF;
+}
+
+.container-plus {
+    border: 3px solid #000000;
 }
 
 

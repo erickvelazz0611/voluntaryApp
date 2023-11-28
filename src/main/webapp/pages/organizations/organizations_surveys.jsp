@@ -1,184 +1,48 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!doctype html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VoluntariApp Encuestas</title>
+    <link rel="shortcut icon" type="image/png"
+          href="${pageContext.request.contextPath}/assets/images/logos_voluntariapp/logo_VOLUNTARIAPP.png"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/css/style_dashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <!-- Se inserta la foto del logo de la empresa -->
-    <link rel="shortcut icon" type="image/png" href="../../assets/images/logos_voluntariapp/logo_VOLUNTARIAPP.png" />
-    <link rel="stylesheet" href="../../assets/css/styles.min.css" />
-    <link rel="stylesheet" href="../../assets/css/css/style_dashboard.css">
-    <link rel="stylesheet" href="{pageContext.request.contextPath}https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{pageContext.request.contextPath}https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <jsp:include page="/layouts/DataTablesCSS.jsp"/>
 </head>
-
 <body>
-<!-- Incio del copipage Plantilla (DASHBOARD) -->
-<!--  Body Wrapper -->
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
      data-sidebar-position="fixed" data-header-position="fixed">
-    <!-- Sidebar Start -->
-    <!-- localizatodo en su lugar -->
-    <aside class="left-sidebar"> <!-- COLOR == | Fondo Barra Lateral Izquierdo | ==-->
-        <!-- Sidebar scroll-->
-        <!-- Localiza la barra superior en su lugar -->
+    <aside class="left-sidebar">
         <div>
-            <!-- Imagen del logo de la app -->
             <div class="brand-logo d-flex align-items-center justify-content-between">
-                <a href="/organ/main" class="text-nowrap logo-img">
+                <a href="${pageContext.request.contextPath}/organ/main" class="text-nowrap logo-img">
                     <!-- Logo parte superior izquierda -->
-                    <img src="../../assets/images/logos_voluntariapp/logo_extend.png" style="width:180px"
-                         alt="" /><!-- Logo de la barra lateral -->
+                    <img src="${pageContext.request.contextPath}/assets/images/logos_voluntariapp/logo_extend.png"
+                         style="width:180px"
+                         alt=""/>
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                     <i class="ti ti-x fs-8"></i>
                 </div>
             </div>
-            <!-- Fin Imagen del logo de la app -->
-            <!-- Sidebar navigation-->
-            <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-                <ul id="sidebarnav">
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Home</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/main" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout-dashboard"></i>
-                </span>
-                            <span class="hide-menu">Panel Organización</span>
-                        </a>
-                    </li>
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Administrar</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/events" aria-expanded="false">
-                <span>
-                  <i class="ti ti-calendar-event"></i>
-                </span>
-                            <span class="hide-menu">Eventos</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/surveys" aria-expanded="false">
-                <span>
-                  <i class="ti ti-clipboard-text"></i>
-                </span>
-                            <span class="hide-menu">Encuestas</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/postulations" aria-expanded="false">
-                <span>
-                  <i class="ti ti-man"></i>
-                </span>
-                            <span class="hide-menu">Postulados</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/aprob" aria-expanded="false">
-                <span>
-                  <i class="ti ti-check"></i>
-                </span>
-                            <span class="hide-menu">Aprobar</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/porfile" aria-expanded="false">
-                <span>
-                  <i class="ti ti-user-circle"></i>
-                </span>
-                            <span class="hide-menu">Perfil</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- End Sidebar navigation -->
+            <jsp:include page="/layouts/sidebar.jsp"/>
         </div>
-        <!-- End Sidebar scroll-->
     </aside>
-    <!-- Fin Sidebar navigation-->
-
-
-    <!--  Main wrapper -->
-    <div class="body-wrapper"> <!-- COLOR == | Fondo Central | ==-->
-        <!--  Header Start -->
-        <header class="app-header"> <!-- COLOR == | Barra Navegacion Superior | ==-->
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <ul class="navbar-nav">
-                    <li class="nav-item d-block d-xl-none">
-                        <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                            <i class="ti ti-menu-2"></i>
-                        </a>
-                    </li>
-                </ul>
-                <!-- Nav parte superior de iconos -->
-                <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                        <!-- Etiqueta para meter cosas -->
-                        <li class="nav-item d-none d-lg-block">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
-                               data-bs-target="#exampleModal">
-                                <i class="ti ti-search"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-                                <i class="ti ti-bell-ringing"></i>
-                                <div class="notification bg-primary rounded-circle"></div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-icon-hover">
-                                <i class="ti ti-question-mark"></i>
-                            </a>
-                        </li>
-                        <!-- Foto de perfil -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"  class="rounded-circle">
-                            </a>
-
-                            <!-- Menu desplegable del la Foto fe perfil -->
-                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                                <!-- COLOR == | Fondo Desplegable Foto Perfil | ==    (Codigo de arriba)  -->
-                                <div class="message-body">
-                                    <a href="/organ/porfile" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-user fs-6"></i>
-                                        <p class="mb-0 fs-3">Mi perfil</p>
-                                    </a>
-                                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-tools fs-6"></i>
-                                        <p class="mb-0 fs-3">Perzonalizar</p>
-                                    </a>
-                                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-list-check fs-6"></i>
-                                        <p class="mb-0 fs-3">Otros</p>
-                                    </a>
-                                    <a href="/user/login" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
-                                        Sesion</a>
-                                </div>
-                            </div>
-                            <!-- Fin del Menu desplegable del la Foto fe perfil -->
-                        </li>
-                        <!-- Fin Foto de perfil -->
-                    </ul>
-                </div>
-            </nav>
+    <div class="body-wrapper">
+        <header class="app-header">
+            <jsp:include page="/layouts/navbar.jsp"/>
         </header>
-        <!--  Header End -->
-        <!-- Inicio Contenedor (Principal) -->
-        <div class="container-fluid">
 
-            <!-- Inicio Contenedor (Central) -->
+        <div class="container-fluid d-block">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col">
                     <div class="d-flex align-items-center gap-2 dropdown-item text-b">
                         <i class="ti ti-clipboard-text fs-8"></i>
                         <h3 class="mb-0 text-b">Tus Encuestas</h3>
@@ -187,48 +51,170 @@
                 </div>
             </div>
             <hr>
-            <!-- Fin Contenedor (Central) -->
+
+            <div class="form-floating">
+                <input type="hidden" id="organ_id" name="organ_id" value="<%= session.getAttribute("organId")%>"
+                       class="form-control">
+            </div>
 
             <div class="row">
-                <!-- Inicio de barras de eventos -->
-                <div class="container barra-pading">
-                    <div class="event-card card">
-                        <div class="event-details">
-                            <img src="https://lacensura.com/wp-content/uploads/2021/06/utez_14-01-21.jpg"
-                                 alt="Imagen del evento">
-                            <div class="event-info">
-                                <h5 class="card-title">Nombre de la Encuesta</h5>
-                                <h6>Nombre del Evento</h6>
-                            </div>
-                            <div class="event-actions">
-                                <a class="event-action" href="#" aria-expanded="false">
-                                        <span>
-                                            <i class="ti ti-eye"></i>
-                                        </span>
-                                </a>
-                                <a class="event-action" href="#" aria-expanded="false">
-                                        <span>
-                                            <i class="ti ti-edit"></i>
-                                        </span>
-                                </a>
-                                <a class="event-action" href="#" aria-expanded="false">
-                                        <span>
-                                            <i class="ti ti-trash-x"></i>
-                                        </span>
-                                </a>
+                <div class="col-lg-12 d-flex align-items-stretch">
+                    <div class="card w-100">
+                        <div class="card-body p-3">
+                            <div class="table-responsive">
+                                <table id="example" class="table text-nowrap mb-0 align-middle">
+                                    <thead class="text-dark fs-4">
+                                    <tr>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Formulario</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Instrucciones</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Status</h6>
+                                        </th>
+                                        <%--<th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Id_organ</h6>
+                                        </th>--%>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0"></h6>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="formulario" items="${forms}">
+                                        <tr>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">
+                                                    <c:out value="${formulario.name_form}"/>
+                                                </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0 short-description"
+                                                    data-description="${formulario.instructions}">
+                                                    <c:out value="${formulario.instructions}"/>
+                                                </h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">
+                                                    <c:out value="${formulario.enable ? 'Activo' : 'Inactivo'}"/>
+                                                </h6>
+                                            </td>
+
+                                                <%--<td class="border-bottom-0">
+                                                    <p class="mb-0 fw-normal">
+                                                        <c:out value="${formulario.id_organ}"/>
+                                                    </p>
+                                                </td>--%>
+                                            <td class="border-bottom-0">
+                                                <form method="GET"
+                                                      action="${pageContext.request.contextPath}/forms/create-question">
+                                                    <input type="hidden" name="id" value="${formulario.id_forms}">
+                                                    <button type="submit" class="btn btn-success btn-sm">
+                                                        Agregar Preguntas
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <div class="col">
+                                                    <button type="button" class="btn btn-warning"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal"
+                                                            onclick="editForm(${formulario.id_forms})"
+                                                            id="editForm${formulario.id_forms}"
+                                                            data-id_forms="${formulario.id_forms}"
+                                                            data-name_form="${formulario.name_form}"
+                                                            data-instructions="${formulario.instructions}">
+                                                        Editar
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <form <%--id="deleteForm"--%> method="post" action="/forms/delete">
+                                                    <input type="hidden" name="id" value="${formulario.id_forms}"/>
+                                                    <button type="submit" class="btn btn-danger"> Eliminar
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Fin de barras de eventos -->
+            </div>
 
+            <div class="row pt-8">
+                <div class="modal fade" id="exampleModal" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Actualización del Formulario
+                                </h5>
+                                <button type="button" class="btn-close"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form class="needs-validation" id="form-form" novalidate
+                                      action="${pageContext.request.contextPath}/forms/update" method="post">
+                                    <%-- <input hidden value="${formulario.id}" name="id">--%>
+                                    <!-- Muestra elid del organizacion-->
+                                    <input type="hidden" name="form_id" id="id" class="form-control" required>
+
+
+                                    <div class="row ">
+                                        <div class="col-md-0 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="name_form" id="name_form"
+                                                       class="form-control"
+                                                       required>
+                                                <label for="name_form">Nombre del Formulario </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-0 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="instructions"
+                                                       id="instructions"
+                                                       class="form-control"
+                                                       required>
+                                                <label for="instructions">Instrucciones</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                                data-bs-dismiss="modal" aria-label="Close">
+                                            Cancelar
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-sm"
+                                                onclick="mostrarConfirmacion()">
+                                            Actualizar
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  ===============       Fin del Modal de Actualizar      ===============  -->
             </div>
 
 
             <div class="row">
-                <div class="container barra-pading text-center">
+                <div class="col container barra-pading text-center">
                     <div class="event-card card ">
-                        <a class="event-action add-button" href="#" aria-expanded="false">
+                        <a class="event-action add-button" href="${pageContext.request.contextPath}/organ/create_forms"
+                           aria-expanded="false">
                                 <span>
                                     <i class="ti ti-circle-plus"></i>
                                 </span>
@@ -236,20 +222,113 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- Fin Contenedor (Principal) -->
-
     </div>
 </div>
 <!-- JS -->
-<script src="../../assets/js/jquery.min.js"></script>
-<script src="../../assets/js/bootstrap.bundle.min.js"></script>
-<script src="../../assets/js/sidebarmenu.js"></script>
-<script src="../../assets/js/app.min.js"></script>
-<!-- Estadisticas Library -->
-<script src="../../assets/js/apexcharts.min.js"></script>
-<script src="../../assets/js/dashboard.js"></script>
+<jsp:include page="/layouts/footer.jsp"/>
+
+<script>
+    (function () {
+        'use strict'
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })();
+</script>
+
+<script>
+    function mostrarAlertaActualizacion() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Se realizarán los cambios. ¿Estás seguro de continuar?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario hace clic en "Sí", procedemos a enviar el formulario manualmente.
+                enviarFormulario();
+            }
+        });
+    }
+</script>
+<script>
+    /*Conseguir el id del evento mediante Java script */
+
+    // Función para extraer el ID del modal
+
+    // Para probar la función, puedes invocarla y mostrar el resultado en la consola:
+    const editForm = (id) => {
+        const btn = document.getElementById("editForm" + id);
+        console.log("ID:", id);
+        const idForm = btn.dataset.id_forms;
+        console.log("ID Forms:", idForm);
+        const nameForm = btn.dataset.name_form;
+        console.log("Name Form:", nameForm);
+        const instructionsForm = btn.dataset.instructions;
+        console.log("Instructions:", instructionsForm);
+
+        document.getElementById("id").value = idForm;
+        document.getElementById("name_form").value = nameForm;
+        document.getElementById("instructions").value = instructionsForm;
+    }
+
+</script>
+
+<script>
+    function mostrarConfirmacion() {
+        if (document.getElementById("form-form").checkValidity()) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Se realizarán los cambios. ¿Estás seguro de continuar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario hace clic en "Sí", procedemos a enviar el formulario manualmente.
+                    document.getElementById('form-form').submit();
+                }
+            });
+        } else {
+            document.getElementById("form-form").classList.add('was-validated');
+        }
+    }
+
+    function enviarFormulario() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/form/update", true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // La solicitud se ha completado correctamente.
+                // Aquí manejamos la respuesta del servidor y mostramos la alerta de éxito o error.
+                if (xhr.responseText.includes("success")) {
+                    mostrarAlerta('¡Éxito! Organización actualizada correctamente.', 'success', true);
+                } else {
+                    mostrarAlerta('¡Error! Acción no realizada correctamente.', 'error', false);
+                }
+            } else {
+                // Ha ocurrido un error al realizar la solicitud.
+                mostrarAlerta('Error al enviar el formulario', 'error', false);
+            }
+        }
+    }
+</script>
 </body>
-
-
 </html>

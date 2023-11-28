@@ -123,13 +123,13 @@ public class ServletUser extends HttpServlet {
 
 
         switch (action){
-            case "/user/main":
-                email = req.getParameter("email");
-                password = req.getParameter("password");
-                System.out.println(email+password);
-                try {
-                    user = new DaoUser().loadUserByEmailandPassword(email, password);
-                    if (user != null) {
+                case "/user/main":
+                    email = req.getParameter("email");
+                    password = req.getParameter("password");
+                    System.out.println("/* =================================== */" +"\n/*           Inicio sesion             */"+"\n/* =================================== */" );
+                    System.out.println("Email:      "+email+"\nContraseña: "+password);
+                    try {
+                        user = new DaoUser().loadUserByEmailandPassword(email, password);
                         session = req.getSession();
                         session.setAttribute("user", user);
                         switch (user.getDescription().getDescription()) {
@@ -138,25 +138,27 @@ public class ServletUser extends HttpServlet {
                                 break;
                             case "ORGANIZATION":
                                 organ = new DaoOrgan().findOneByUser(user.getId_user());
-                                System.out.println("id de organizacion: "+organ.getId()+".");
-                                System.out.println(user.getId_user()+ " id de use");
+                                System.out.println("/* =================================== */" +"\n/*              Sesion              */"+"\n/* =================================== */" );
+                                System.out.println(" Id de Organizacion: " + organ.getId() + ".");
+                                System.out.println(" id de User:         " + user.getId_user()+".");
+
                                 session.setAttribute("userId", user.getId_user());
-                                session.setAttribute("organId", +organ.getId());
+                                session.setAttribute("organId", organ.getId());
                                 redirect = "/organ/main";
                                 break;
                             case "VOLUNTEER":
                                 redirect = "/volunteer/main";
                                 break;
                         }
-                    } else {
-                        throw new Exception("Credentials mismatch");
+                    } catch (DaoUser.UserDisabledException e) {
+                        redirect = "/api/auth/login?result=false&message=" + URLEncoder.encode("Usuario deshabilitado", StandardCharsets.UTF_8);
+                    } catch (DaoUser.CredentialsMismatchException e) {
+                        redirect = "/api/auth/login?result=false&message=" + URLEncoder.encode("Email y/o contraseña incorrectos", StandardCharsets.UTF_8);
+                    } catch (Exception e) {
+                        // Aquí deberías manejar otras posibles excepciones que no están relacionadas con la autenticación del usuario.
+                        e.printStackTrace();  // Imprime la traza de la excepción para ayudar con la depuración.
                     }
-                } catch (Exception e) {
-                    redirect = "/user/login?result=false&message=" + URLEncoder
-                            .encode("Email y/o contraseña incorrecta",
-                                    StandardCharsets.UTF_8);
-                }
-                break;
+                    break;
             case "/user/login":
                 // Código para cerrar sesión
                 req.getSession().invalidate();
