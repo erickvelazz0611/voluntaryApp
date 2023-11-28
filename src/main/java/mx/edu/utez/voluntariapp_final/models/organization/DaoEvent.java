@@ -161,6 +161,7 @@ public class DaoEvent {
             cs.setString(10,event.getCategory());
             cs.setLong(11,event.getUser().getId_user());
             cs.setLong(12,event.getOrgan().getId());
+            cs.setBoolean(13, event.isEnable());
 
             System.out.println(event.getOrgan().getId()+" Daooooo");
             System.out.println(event.getUser().getId_user()+ " id de Usuario");

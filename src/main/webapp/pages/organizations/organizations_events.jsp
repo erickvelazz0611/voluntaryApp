@@ -1,21 +1,19 @@
-
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!doctype html>
-<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VoluntariApp Eventos</title>
-    <!-- Se inserta la foto del logo de la empresa -->
-    <link rel="shortcut icon" type="image/png" href="../../assets/images/logos_voluntariapp/logo_VOLUNTARIAPP.png"/>
-    <link rel="stylesheet" href="../../assets/css/styles.min.css"/>
-    <link rel="stylesheet" href="../../assets/css/css/style_dashboard.css">
+    <link rel="shortcut icon" type="image/png"
+          href="${pageContext.request.contextPath}/assets/images/logos_voluntariapp/logo_VOLUNTARIAPP.png"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/css/style_dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-    <link rel="stylesheet" href="../../assets/css/css/sweetalert2.min.css">
+    <!-- Se inserta la foto del logo de la empresa -->
+    <jsp:include page="/layouts/DataTablesCSS.jsp"/>
 </head>
 
 <body>
@@ -23,167 +21,29 @@
 <!--  Body Wrapper -->
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
      data-sidebar-position="fixed" data-header-position="fixed">
-    <!-- Sidebar Start -->
-    <!-- localizatodo en su lugar -->
-    <aside class="left-sidebar"> <!-- COLOR == | Fondo Barra Lateral Izquierdo | ==-->
-        <!-- Sidebar scroll-->
-        <!-- Localiza la barra superior en su lugar -->
+    <aside class="left-sidebar">
         <div>
-            <!-- Imagen del logo de la app -->
             <div class="brand-logo d-flex align-items-center justify-content-between">
-                <a href="/organ/main" class="text-nowrap logo-img">
+                <a href="${pageContext.request.contextPath}/organ/main" class="text-nowrap logo-img">
                     <!-- Logo parte superior izquierda -->
-                    <img src="../../assets/images/logos_voluntariapp/logo_extend.png" style="width:180px"
-                         alt=""/><!-- Logo de la barra lateral -->
+                    <img src="${pageContext.request.contextPath}/assets/images/logos_voluntariapp/logo_extend.png"
+                         style="width:180px"
+                         alt=""/>
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                     <i class="ti ti-x fs-8"></i>
                 </div>
             </div>
-            <!-- Fin Imagen del logo de la app -->
-            <!-- Sidebar navigation-->
-            <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-                <ul id="sidebarnav">
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Home</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/main" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout-dashboard"></i>
-                </span>
-                            <span class="hide-menu">Panel Organización</span>
-                        </a>
-                    </li>
-                    <li class="nav-small-cap">
-                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Administrar</span>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/events" aria-expanded="false">
-                <span>
-                  <i class="ti ti-calendar-event"></i>
-                </span>
-                            <span class="hide-menu">Eventos</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/surveys" aria-expanded="false">
-                <span>
-                  <i class="ti ti-clipboard-text"></i>
-                </span>
-                            <span class="hide-menu">Encuestas</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/postulations" aria-expanded="false">
-                <span>
-                  <i class="ti ti-man"></i>
-                </span>
-                            <span class="hide-menu">Postulados</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/aprob" aria-expanded="false">
-                <span>
-                  <i class="ti ti-check"></i>
-                </span>
-                            <span class="hide-menu">Aprobar</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/organ/porfile" aria-expanded="false">
-                <span>
-                  <i class="ti ti-user-circle"></i>
-                </span>
-                            <span class="hide-menu">Perfil</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- End Sidebar navigation -->
+            <jsp:include page="/layouts/sidebar.jsp"/>
         </div>
-        <!-- End Sidebar scroll-->
     </aside>
-    <!-- Fin Sidebar navigation-->
 
-
-    <!--  Main wrapper -->
-    <div class="body-wrapper"> <!-- COLOR == | Fondo Central | ==-->
-        <!--  Header Start -->
-        <header class="app-header"> <!-- COLOR == | Barra Navegacion Superior | ==-->
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <ul class="navbar-nav">
-                    <li class="nav-item d-block d-xl-none">
-                        <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                            <i class="ti ti-menu-2"></i>
-                        </a>
-                    </li>
-                </ul>
-                <!-- Nav parte superior de iconos -->
-                <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                        <!-- Etiqueta para meter cosas -->
-                        <li class="nav-item d-none d-lg-block">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal"
-                               data-bs-target="#exampleModal">
-                                <i class="ti ti-search"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-                                <i class="ti ti-bell-ringing"></i>
-                                <div class="notification bg-primary rounded-circle"></div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-icon-hover">
-                                <i class="ti ti-question-mark"></i>
-                            </a>
-                        </li>
-                        <!-- Foto de perfil -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                <img src="../../assets/images/user-1.jpg" alt="" style="width:35px; height:35px"
-                                     class="rounded-circle">
-                            </a>
-
-                            <!-- Menu desplegable del la Foto fe perfil -->
-                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
-                                 aria-labelledby="drop2">
-                                <!-- COLOR == | Fondo Desplegable Foto Perfil | ==    (Codigo de arriba)  -->
-                                <div class="message-body">
-                                    <a href="/organ/porfile" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-user fs-6"></i>
-                                        <p class="mb-0 fs-3">Mi perfil</p>
-                                    </a>
-                                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-tools fs-6"></i>
-                                        <p class="mb-0 fs-3">Perzonalizar</p>
-                                    </a>
-                                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-list-check fs-6"></i>
-                                        <p class="mb-0 fs-3">Otros</p>
-                                    </a>
-                                    <a href="/user/login" class="btn btn-outline-primary mx-3 mt-2 d-block">Cerrar
-                                        Sesion</a>
-                                </div>
-                            </div>
-                            <!-- Fin del Menu desplegable del la Foto fe perfil -->
-                        </li>
-                        <!-- Fin Foto de perfil -->
-                    </ul>
-                </div>
-            </nav>
+    <div class="body-wrapper">
+        <header class="app-header">
+            <jsp:include page="/layouts/navbar.jsp"/>
         </header>
-        <!--  Header End -->
-        <!-- Inicio Contenedor (Principal) -->
-        <div class="container-fluid">
 
-            <!-- Inicio Contenedor (Central) -->
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-flex align-items-center gap-2 dropdown-item text-b">
@@ -194,27 +54,25 @@
                 </div>
             </div>
             <hr>
-            <!-- Fin Contenedor (Central) -->
 
-            <!-- Inicia la tabla para los eventos -->
+            <div class="form-floating">
+                <input type="hidden" id="organ_id" name="organ_id" value="<%= session.getAttribute("organId")%>"
+                       class="form-control">
+            </div>
+
             <div class="row">
-                <!-- Aqui inicia el codigo 242 -->
-                <div class="col-lg- d-flex align-items-stretch">
+                <div class="col-lg-12 d-flex align-items-stretch">
                     <div class="card w-100">
                         <div class="card-body p-3">
                             <div class="table-responsive">
-                                <table class="table text-nowrap mb-0 align-middle">
-                                    <!--  -->
+                                <table id="example" class="table text-nowrap mb-0 align-middle">
                                     <thead class="text-dark fs-4">
                                     <tr>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Foto</h6>
-                                        </th>
                                         <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Nombre del evento</h6>
                                         </th>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Descricpión</h6>
+                                            <h6 class="fw-semibold mb-0">Descripción</h6>
                                         </th>
                                         <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">Fecha del evento</h6>
@@ -223,22 +81,10 @@
                                             <h6 class="fw-semibold mb-0">Hora del evento</h6>
                                         </th>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Estado</h6>
+                                            <h6 class="fw-semibold mb-0">Categoría</h6>
                                         </th>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Calle</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Colonia</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Tipo de evento</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Editar</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Eliminar</h6>
+                                            <h6 class="fw-semibold mb-0">Formulario</h6>
                                         </th>
                                     </tr>
                                     </thead>
@@ -247,23 +93,19 @@
                                         <tr>
                                             <td class="border-bottom-0">
                                                 <h6 class="fw-semibold mb-0">
-
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
                                                     <c:out value="${eventito.name}"/>
                                                 </h6>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-1">
+                                                <h6 class="fw-semibold mb-0 short-description"
+                                                    data-description="${eventito.description}">
                                                     <c:out value="${eventito.description}"/>
                                                 </h6>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">
+                                                <h6 class="fw-semibold mb-1">
                                                     <c:out value="${eventito.event_date}"/>
-                                                </p>
+                                                </h6>
                                             </td>
                                             <td class="border-bottom-0">
                                                 <p class="mb-0 fw-normal">
@@ -272,51 +114,51 @@
                                             </td>
                                             <td class="border-bottom-0">
                                                 <p class="mb-0 fw-normal">
-                                                    <c:out value="${eventito.state}"/>
-                                                </p>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-                                                    <c:out value="${eventito.municipality}"/>
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-                                                    <c:out value="${eventito.postal_code}"/>
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-                                                    <c:out value="${eventito.street}"/>
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">
-                                                    <c:out value="${eventito.cologne}"/>
-                                                </h6>
-                                            </td>
-                                        <%--                     Aqui esta el STATUS                       --%>
-                                        <%-- <td class="border-bottom-0">--%>
-                                        <%--   <div class="d-flex align-items-center gap-2">--%>
-                                        <%--    <span--%>
-                                        <%--        class="badge bg-danger rounded-3 fw-semibold"> <c:out value="${orga.user.status}"/>--%>
-                                        <%--    </span>--%>
-                                        <%--   </div>--%>
-                                        <%-- </td>--%>
-                                            <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">
                                                     <c:out value="${eventito.category}"/>
                                                 </p>
                                             </td>
                                             <td class="border-bottom-0">
                                                 <p class="mb-0 fw-normal">
-
+                                                    <c:choose>
+                                                        <c:when test="${not empty eventito.forms.name_form}">
+                                                            <c:out value="${eventito.forms.name_form}"/>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Sin Formulario
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </p>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">
-
-                                                </p>
+                                                <div class="col">
+                                                    <button type="button" class="btn btn-warning"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal"
+                                                            onclick="editEvent(${eventito.id})"
+                                                            id="editEvent${eventito.id}"
+                                                            data-id="${eventito.id}"
+                                                            data-name="${eventito.name}"
+                                                            data-description="${eventito.description}"
+                                                            data-event_date="${eventito.event_date}"
+                                                            data-event_time="${eventito.event_time}"
+                                                            data-state="${eventito.state}"
+                                                            data-municipality="${eventito.municipality}"
+                                                            data-postal_code="${eventito.postal_code}"
+                                                            data-street="${eventito.street}"
+                                                            data-cologne="${eventito.cologne}"
+                                                            data-category="${eventito.category}"
+                                                            data-id_form="${eventito.id_form}">
+                                                        Editar
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <form id="deleteForm" method="post" action="/event/delete">
+                                                    <input type="hidden" name="id" value="${eventito.id}"/>
+                                                    <button type="button" onclick="confirmDelete()"
+                                                            class="btn btn-danger">Eliminar
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -327,12 +169,178 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row pt-8">
+                <div class="modal fade" id="exampleModal" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Actualización del Evento
+                                </h5>
+                                <button type="button" class="btn-close"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form class="needs-validation" id="organ-form" novalidate
+                                      action="${pageContext.request.contextPath}/event/update" method="post">
+                                    <%--<input hidden value="${formulario.id}" name="id">--%>
+                                    <!-- Muestra elid del organizacion-->
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="id" id="id"
+                                                       class="form-control"
+                                                       required>
+                                                <label for="id">Numero de Evento</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-md-0 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="name" id="name"
+                                                       class="form-control"
+                                                       required>
+                                                <label for="name">Nombre del Evento </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-0 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="description"
+                                                       id="description"
+                                                       class="form-control"
+                                                       placeholder="description"
+                                                       required>
+                                                <label for="event_time">Descripcion del Evento</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <input type="date" name="event_date"
+                                                       id="event_date" class="form-control"
+                                                       required>
+                                                <label for="name">Fecha del Evento </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <input type="time" name="event_time"
+                                                       id="event_time" class="form-control" required>
+                                                <label for="event_time">Hora del Evento </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="municipality"
+                                                       id="municipality"
+                                                       value=""
+                                                       class="form-control"
+                                                       placeholder="municipality"
+                                                       required>
+                                                <label for="municipality">Municipio</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="postal_code"
+                                                       id="postal_code"
+                                                       value=""
+                                                       pattern="[0-9]{5}"
+                                                       class="form-control"
+                                                       required>
+                                                <label for="postal_code">Código postal</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="cologne" id="cologne"
+                                                       class="form-control"
+                                                       placeholder="cologne"
+                                                       value="" required>
+                                                <label for="cologne">Colonia</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="street" id="street"
+                                                       class="form-control"
+                                                       value=""
+                                                       placeholder="street"
+                                                       required>
+                                                <label for="street">Calle</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <input type="text" name="state" id="state"
+                                                       value=""
+                                                       class="form-control" required>
+                                                <label for="state">Estado</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <label for="category" class="form-label"></label>
+                                                <select class="form-select" name="category" id="category" required>
+                                                    <option selected disabled value="">Selecciona la Categoria...
+                                                    </option>
+                                                    <option value="Benefico">Benefico</option>
+                                                    <option value="Caridad">Caridad</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-floating">
+                                                <input type="number" id="id_form" name="id_form" class="form-control"
+                                                       placeholder="Numero del Formulario">
+                                                <label for="id_form">Formulario</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                                data-bs-dismiss="modal" aria-label="Close">
+                                            Cancelar
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-sm"
+                                                onclick="mostrarConfirmacion()">
+                                            Actualizar
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  ===============       Fin del Modal de Actualizar      ===============  -->
+            </div>
         </div>
 
         <div class="row">
             <div class="container barra-pading text-center">
                 <div class="event-card card ">
-                    <a class="event-action add-button" href="/organ/create_event" aria-expanded="false">
+                    <a class="event-action add-button" href="${pageContext.request.contextPath}/organ/create_event"
+                       aria-expanded="false">
                                 <span>
                                     <i class="ti ti-circle-plus"></i>
                                 </span>
@@ -341,21 +349,11 @@
             </div>
         </div>
 
+        <!-- Fin Contenedor (Principal) -->
     </div>
-    <!-- Fin Contenedor (Principal) -->
-
-</div>
 </div>
 <!-- JS -->
-<script src="../../assets/js/jquery.min.js"></script>
-<script src="../../assets/js/bootstrap.bundle.min.js"></script>
-<script src="../../assets/js/sidebarmenu.js"></script>
-<script src="../../assets/js/app.min.js"></script>
-<!-- Estadisticas Library -->
-<script src="../../assets/js/apexcharts.min.js"></script>
-<script src="../../assets/js/dashboard.js"></script>
-<script src="../../assets/js/sweetalert2.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<jsp:include page="/layouts/footer.jsp"/>
 <script>
     (function () {
         'use strict'
@@ -373,12 +371,26 @@
                 }, false)
             })
     })();
+
+    function confirmDelete() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteForm').submit();
+            }
+        });
+    }
+
 </script>
 
 <script>
-    // ... Tu código JavaScript anterior ...
-
-    // Función para mostrar la alerta de confirmación de actualización
     function mostrarAlertaActualizacion() {
         Swal.fire({
             title: '¿Estás seguro?',
@@ -394,35 +406,97 @@
             }
         });
     }
-
-    // ... Tu código JavaScript posterior ...
 </script>
 
 <script>
-    function mostrarConfirmacionEliminar() {
-        Swal.fire({
-            title: '¿Estás seguro de eliminar este evento?',
-            text: "Esta acción no se puede deshacer.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'No, cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Aquí puedes colocar la lógica para eliminar el evento
-                // Por ejemplo, puedes hacer una petición AJAX al servidor
-                Swal.fire(
-                    'Eliminado',
-                    'El evento ha sido eliminado.',
-                    'success'
-                );
-            }
-        });
+    /*Conseguir el id del evento mediante Java script */
+
+    // Función para extraer el ID del modal
+
+    // Para probar la función, puedes invocarla y mostrar el resultado en la consola:
+
+    const editEvent = (id) => {
+        const btn = document.getElementById("editEvent" + id)
+        const idEvent = btn.dataset.id;
+        const nameEvent = btn.dataset.name;
+        const descripcionEvent = btn.dataset.description;
+        const eventDate = btn.dataset.event_date
+        const eventTime = btn.dataset.event_time;
+        const stateEvent = btn.dataset.state;
+        const municipalityEvent = btn.dataset.municipality;
+        const postal_codeEvent = btn.dataset.postal_code;
+        const streetEvent = btn.dataset.street;
+        const cologneEvent = btn.dataset.cologne;
+        const categoryEvent = btn.dataset.category;
+        const id_formEvent = btn.dataset.id_form;
+
+        document.getElementById("id").value = idEvent;
+        document.getElementById("name").value = nameEvent;
+        document.getElementById("description").value = descripcionEvent;
+        document.getElementById("event_date").value = eventDate;
+        document.getElementById("event_time").value = eventTime;
+        document.getElementById("state").value = stateEvent;
+        document.getElementById("municipality").value = municipalityEvent;
+        document.getElementById("postal_code").value = postal_codeEvent;
+        document.getElementById("street").value = streetEvent;
+        document.getElementById("cologne").value = cologneEvent;
+        document.getElementById("category").value = categoryEvent;
+        document.getElementById("id_form").value = id_formEvent;
+
     }
 </script>
+<script>
+    function mostrarConfirmacion() {
+        if (document.getElementById("organ-form").checkValidity()) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Se realizarán los cambios. ¿Estás seguro de continuar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario hace clic en "Sí", procedemos a enviar el formulario manualmente.
+                    document.getElementById('organ-form').submit();
+                }
+            });
+        } else {
+            document.getElementById("organ-form").classList.add('was-validated');
+        }
+    }
 
+    function enviarFormulario() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/event/update", true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // La solicitud se ha completado correctamente.
+                // Aquí manejamos la respuesta del servidor y mostramos la alerta de éxito o error.
+                if (xhr.responseText.includes("success")) {
+                    mostrarAlerta('¡Éxito! Organización actualizada correctamente.', 'success', true);
+                } else {
+                    mostrarAlerta('¡Error! Acción no realizada correctamente.', 'error', false);
+                }
+            } else {
+                // Ha ocurrido un error al realizar la solicitud.
+                mostrarAlerta('Error al enviar el formulario', 'error', false);
+            }
+        }
+    }
+</script>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const descriptions = document.querySelectorAll('.short-description');
+        descriptions.forEach(desc => {
+            const fullDescription = desc.getAttribute('data-description');
+            if (fullDescription.length > 50) { // Cambia 50 al número de caracteres que quieras mostrar
+                const shortened = fullDescription.substr(0, 50) + "...";
+                desc.innerText = shortened;
+            }
+        });
+    });
+
+</script>
 </body>
-
-</html>

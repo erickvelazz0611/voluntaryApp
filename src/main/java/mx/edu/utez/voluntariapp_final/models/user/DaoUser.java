@@ -24,17 +24,24 @@ public class DaoUser implements DaoRepository<User> {
     private PreparedStatement pstm;
     private ResultSet rs;
 
-    public User loadUserByEmailandPassword(String email,
-                                           String password) {
-        System.out.println(email + password);
+    public User loadUserByEmailandPassword(String email, String password) throws UserDisabledException, CredentialsMismatchException {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
         try {
             conn = new MYSQLConnection().connect();
-            String query = "SELECT u.id, u.email, u.password,r.description FROM users u JOIN roles r ON u.role_id = r.id where email=? and password=?;";
+            String query = "SELECT u.id, u.email, u.enable, u.password, r.description FROM users u JOIN roles r ON u.role_id = r.id WHERE email=?;";
             pstm = conn.prepareStatement(query);
             pstm.setString(1, email);
-            pstm.setString(2, password);
             rs = pstm.executeQuery();
             if (rs.next()) {
+                if (rs.getInt("enable") == 0) {
+                    throw new UserDisabledException("Usuario deshabilitado");
+                }
+                String dbPassword = rs.getString("password");
+                if (!dbPassword.equals(password)) {
+                    throw new CredentialsMismatchException("Email y/o contraseña incorrectos");
+                }
                 User user = new User();
                 user.setId_user(rs.getLong("id"));
                 user.setEmail(rs.getString("email"));
@@ -44,13 +51,24 @@ public class DaoUser implements DaoRepository<User> {
                 description.setDescription(rs.getString("description"));
                 user.setDescription(description);
                 return user;
+            } else {
+                throw new CredentialsMismatchException("Email y/o contraseña incorrectos");
             }
         } catch (SQLException e) {
-            Logger.getLogger(DaoUser.class.getName()).log(Level.SEVERE, "Credentials mismatch: " + e.getMessage());
-        } finally {
-            close();
+            Logger.getLogger(DaoUser.class.getName()).log(Level.SEVERE, "Error SQL: " + e.getMessage());
+            throw new CredentialsMismatchException("Error en la consulta SQL");
         }
-        return null;
+    }
+    public class UserDisabledException extends Exception {
+        public UserDisabledException(String message) {
+            super(message);
+        }
+    }
+    // En CredentialsMismatchException.java
+    public class CredentialsMismatchException extends Exception {
+        public CredentialsMismatchException(String message) {
+            super(message);
+        }
     }
 
     @Override

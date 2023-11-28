@@ -105,6 +105,8 @@ public class ServletEvent extends HttpServlet {
                 event.setMunicipality(municipality);
                 event.setState(state);
                 event.setCategory(category);
+                event.setEnable(false);
+
 
                 User user  =new User();
                 user.setId_user(Long.valueOf(user_id));
@@ -123,7 +125,7 @@ public class ServletEvent extends HttpServlet {
                     // Guardar el objeto "Evento" en la base de datos
                     if (new DaoEvent().save(event)) {
                         // Redirigir con mensaje de éxito
-                        response.sendRedirect("/event/events?result=true&message=Evento%20guardado%20correctamente");
+                        response.sendRedirect("/organ/events?result=true&message=Evento%20guardado%20correctamente");
                     } else {
 
                     }
